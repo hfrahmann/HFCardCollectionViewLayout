@@ -845,24 +845,14 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
                             self.movingCardLastTouchedIndexPath = self.movingCardStartIndexPath
                         }
                         if(self.self.movingCardLastTouchedIndexPath != nil && self.movingCardLastTouchedIndexPath! != currentTouchedIndexPath) {
-                            let direction = CGFloat(currentTouchedIndexPath.item - self.movingCardLastTouchedIndexPath!.item)
                             let movingCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath)
                             let movingCellAttr = self.collectionView?.layoutAttributesForItem(at: currentTouchedIndexPath)
                             if(movingCell != nil) {
                                 let cardHeadHeight = self.calculateCardHeadHeight()
-                                let posistionY = self.contentOffsetTop - cardHeadHeight
                                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                                    if(direction == 1) {
-                                        movingCell?.frame.origin.y += cardHeadHeight * (direction * -1)
-                                    } else {
-                                        movingCell?.frame.origin.y = posistionY
-                                    }
+                                    movingCell?.frame.origin.y -= cardHeadHeight
                                 }, completion: { (finished) in
-                                    if(direction == 1) {
-                                        movingCellAttr?.frame.origin.y += cardHeadHeight * (direction * -1)
-                                    } else {
-                                        movingCellAttr?.frame.origin.y = posistionY
-                                    }
+                                    movingCellAttr?.frame.origin.y -= cardHeadHeight
                                 })
                             }
                             
