@@ -16,6 +16,12 @@ There is also a cell class called *HFCardCollectionViewCell* containing rounded 
 But this Cell has no dependency on the *HFCardCollectionViewLayout*.
 That means you can use your own *UICollectionViewCell*
 
+If you want to get notified when a card cell is selected implement the *HFCardCollectionViewCellDelegate* on your CollectionViewCell with the following method:
+
+```swift    
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected: Bool)
+```
+
 
 ## Options and Actions
 
