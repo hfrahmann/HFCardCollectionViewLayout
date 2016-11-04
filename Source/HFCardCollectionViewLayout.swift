@@ -271,12 +271,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     /// - Parameter index: The index of the card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
     public func selectCardAt(index: Int, completion: (() -> Void)? = nil) {
-        /*if self.collectionViewItemCount == 1 {
-            self.collectionView?.isScrollEnabled = false
-            self.selectedIndex = 0
-            _ = self.initializeSelectedCard()
-            self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in completion?() })
-        } else */if self.selectedIndex >= 0 && self.selectedIndex == index && self.selectedCardIsFlipped == true {
+        if self.selectedIndex >= 0 && self.selectedIndex == index && self.selectedCardIsFlipped == true {
             // do nothing, because the card is flipped
         } else if self.selectedIndex >= 0 && index >= 0 {
             if(self.selectedCardIsFlipped == true) {
