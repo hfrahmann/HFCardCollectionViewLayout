@@ -30,15 +30,13 @@ extension UICollectionView {
     open override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
         if let collectionViewLayout = self.collectionViewLayout as? HFCardCollectionViewLayout {
             let gestureClassName = String(describing: type(of: gestureRecognizer))
-            if(gestureClassName == "UILongPressGestureRecognizer") {
+            let gestureString = String(describing: gestureRecognizer)
+            // Prevent default behaviour of 'installsStandardGestureForInteractiveMovement = true' and install a custom reorder gesture recognizer.
+            if(gestureClassName == "UILongPressGestureRecognizer" && gestureString.range(of: "action=_handleReorderingGesture") != nil) {
                 collectionViewLayout.installMoveCardsGestureRecognizer()
                 return
             }
         }
-        super.addGestureRecognizer(gestureRecognizer)
-    }
-    
-    fileprivate func addGestureRecognizerForced(_ gestureRecognizer: UIGestureRecognizer) {
         super.addGestureRecognizer(gestureRecognizer)
     }
     
@@ -443,8 +441,9 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     
     fileprivate func installMoveCardsGestureRecognizer() {
         self.movingCardGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.movingCardGestureHandler))
+        self.movingCardGestureRecognizer?.minimumPressDuration = 0.49
         self.movingCardGestureRecognizer?.delegate = self
-        self.collectionView?.addGestureRecognizerForced(self.movingCardGestureRecognizer!)
+        self.collectionView?.addGestureRecognizer(self.movingCardGestureRecognizer!)
     }
     
     private func initializeCardCollectionViewLayout() {
