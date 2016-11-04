@@ -516,7 +516,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
                 }
             }
         }
-        if(self.scrollShouldSnapCardHead == true && proposedContentOffsetY > self.spaceAtTopForBackgroundView) {
+        if(self.scrollShouldSnapCardHead == true && proposedContentOffsetY > self.spaceAtTopForBackgroundView && self.collectionView!.contentSize.height > self.collectionView!.frame.height + self.cardHeadHeight) {
             let startIndex = Int((proposedContentOffsetY - self.spaceAtTopForBackgroundView) / self.cardHeadHeight) + 1
             let positionToGoUp = self.cardHeadHeight * 0.5
             let cardHeadPosition = (proposedContentOffsetY - self.spaceAtTopForBackgroundView).truncatingRemainder(dividingBy: self.cardHeadHeight)
@@ -768,7 +768,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
                 self.selectedCardCell?.transform = transformY.concatenating(transformScale)
             default:
                 let isNeedReload = (shiftY > self.selectedCardCell!.frame.height / 7) ? true : false
-                let resetY = (isNeedReload) ? self.selectedCardCell!.frame.height * 1.4 : 0
+                let resetY = (isNeedReload) ? self.collectionView!.frame.height : 0
                 let scale: CGFloat = (isNeedReload) ? self.calculateCardScale(forIndex: self.cardCollectionBottomCardsSelectedIndex, scaleBehindCard: true) : 1.0
                 
                 let transformScale = CGAffineTransform.init(scaleX: scale, y: scale)
