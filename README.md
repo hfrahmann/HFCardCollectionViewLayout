@@ -66,7 +66,7 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 @IBInspectable var bottomNumberOfStackedCards: Int = 5
 
 /// All bottom stacked cards are scaled to produce the 3D effect.
-@IBInspectable var bottomShouldScaleStackedCards: Bool = true
+@IBInspectable var bottomStackedCardsShouldScale: Bool = true
 
 /// Specifies the margin for the top margin of a bottom stacked card.
 /// Value can be between 0 and 20

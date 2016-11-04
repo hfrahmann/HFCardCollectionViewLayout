@@ -15,7 +15,7 @@ struct CardLayoutSetupOptions {
     var cardShouldStretchAtScrollTop: Bool = true
     var cardMaximumHeight: CGFloat = 0
     var bottomNumberOfStackedCards: Int = 5
-    var bottomShouldScaleStackedCards: Bool = true
+    var bottomStackedCardsShouldScale: Bool = true
     var bottomCardLookoutMargin: CGFloat = 10
     var spaceAtTopForBackgroundView: CGFloat = 0
     var spaceAtTopShouldSnap: Bool = true
@@ -41,7 +41,7 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var switchCardShouldStretchAtScrollTop: UISwitch?
     @IBOutlet var textfieldCardMaximumHeight: UITextField?
     @IBOutlet var textfieldBottomNumberOfStackedCards: UITextField?
-    @IBOutlet var switchBottomShouldScaleStackedCards: UISwitch?
+    @IBOutlet var switchBottomStackedCardsShouldScale: UISwitch?
     @IBOutlet var textfieldBottomCardLookoutMargin: UITextField?
     @IBOutlet var textfieldSpaceAtTopForBackgroundView: UITextField?
     @IBOutlet var switchSpaceAtTopShouldSnap: UISwitch?
@@ -77,7 +77,7 @@ class MenuTableViewController: UITableViewController {
         self.switchCardShouldStretchAtScrollTop?.isOn   = self.defaults.cardShouldStretchAtScrollTop
         self.textfieldCardMaximumHeight?.text           = self.stringFromFloat(self.defaults.cardMaximumHeight)
         self.textfieldBottomNumberOfStackedCards?.text  = String(self.defaults.bottomNumberOfStackedCards)
-        self.switchBottomShouldScaleStackedCards?.isOn  = self.defaults.bottomShouldScaleStackedCards
+        self.switchBottomStackedCardsShouldScale?.isOn  = self.defaults.bottomStackedCardsShouldScale
         self.textfieldBottomCardLookoutMargin?.text     = self.stringFromFloat(self.defaults.bottomCardLookoutMargin)
         self.textfieldSpaceAtTopForBackgroundView?.text = self.stringFromFloat(self.defaults.spaceAtTopForBackgroundView)
         self.switchSpaceAtTopShouldSnap?.isOn           = self.defaults.spaceAtTopShouldSnap
@@ -101,7 +101,7 @@ class MenuTableViewController: UITableViewController {
             layoutOptions.cardShouldStretchAtScrollTop  = self.switchCardShouldStretchAtScrollTop!.isOn
             layoutOptions.cardMaximumHeight             = self.getFloatFromTextfield(self.textfieldCardMaximumHeight!)
             layoutOptions.bottomNumberOfStackedCards    = self.getIntFromTextfield(self.textfieldBottomNumberOfStackedCards!)
-            layoutOptions.bottomShouldScaleStackedCards = self.switchBottomShouldScaleStackedCards!.isOn
+            layoutOptions.bottomStackedCardsShouldScale = self.switchBottomStackedCardsShouldScale!.isOn
             layoutOptions.bottomCardLookoutMargin       = self.getFloatFromTextfield(self.textfieldBottomCardLookoutMargin!)
             layoutOptions.spaceAtTopForBackgroundView   = self.getFloatFromTextfield(self.textfieldSpaceAtTopForBackgroundView!)
             layoutOptions.spaceAtTopShouldSnap          = self.switchSpaceAtTopShouldSnap!.isOn

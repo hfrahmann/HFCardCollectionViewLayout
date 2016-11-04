@@ -165,7 +165,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     /// All bottom stacked cards are scaled to produce the 3D effect.
     ///
     /// Default: true
-    @IBInspectable var bottomShouldScaleStackedCards: Bool = true {
+    @IBInspectable var bottomStackedCardsShouldScale: Bool = true {
         didSet {
             self.collectionView?.performBatchUpdates({ self.invalidateLayout() }, completion: nil)
         }
@@ -703,7 +703,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     }
     
     private func calculateCardScale(forIndex index: CGFloat, scaleBehindCard: Bool = false) -> CGFloat {
-        if(self.bottomShouldScaleStackedCards == true) {
+        if(self.bottomStackedCardsShouldScale == true) {
             let addedDownScale: CGFloat = (scaleBehindCard == true && index < self.bottomCardCount) ? 0.01 : 0.0
             return 1.0 - (((index + 1 - self.bottomCardCount) * -1) * 0.01) - addedDownScale
         }
