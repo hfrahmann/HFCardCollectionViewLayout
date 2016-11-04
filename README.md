@@ -5,6 +5,14 @@ The HFCardCollectionViewLayout provides a card stack layout not quite similar li
 ![Screenplay](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/Screenplay.gif)
 
 
+# Installation
+
+Install it with cocoapods or just use the files inside the *Source* directory.
+
+```
+pod "HFCardCollectionViewLayout"
+```
+
 
 # Implementation
 
