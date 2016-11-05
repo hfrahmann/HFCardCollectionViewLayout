@@ -8,135 +8,9 @@
 
 import UIKit
 
-/*** HFCardCollectionViewLayoutAttributes class ***/
-
-class HFCardCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
-    
-    /// Specifies if the CardCell is expanded.
-    var isExpand = false
-    
-    override func copy(with zone: NSZone? = nil) -> Any {
-        let attribute = super.copy(with: zone) as! HFCardCollectionViewLayoutAttributes
-        attribute.isExpand = isExpand
-        return attribute
-    }
-    
-}
-
-/*** UICollectionView Extension ***/
-
-extension UICollectionView {
-    
-    open override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
-        if let collectionViewLayout = self.collectionViewLayout as? HFCardCollectionViewLayout {
-            let gestureClassName = String(describing: type(of: gestureRecognizer))
-            let gestureString = String(describing: gestureRecognizer)
-            // Prevent default behaviour of 'installsStandardGestureForInteractiveMovement = true' and install a custom reorder gesture recognizer.
-            if(gestureClassName == "UILongPressGestureRecognizer" && gestureString.range(of: "action=_handleReorderingGesture") != nil) {
-                collectionViewLayout.installMoveCardsGestureRecognizer()
-                return
-            }
-        }
-        super.addGestureRecognizer(gestureRecognizer)
-    }
-    
-    open override func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
-        if self.collectionViewLayout is HFCardCollectionViewLayout {
-            if(self.isScrollEnabled == true) {
-                super.setContentOffset(contentOffset, animated: animated)
-            }
-        } else {
-            super.setContentOffset(contentOffset, animated: animated)
-        }
-    }
-    
-}
-
-/*** UICollectionViewCell Extension ***/
-
-extension UICollectionViewCell {
-    
-    // Important for updating the Z index
-    // and setting the flag 'isUserInteractionEnabled'
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
-            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
-            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
-        } else {
-            self.contentView.isUserInteractionEnabled = true
-        }
-    }
-    
-}
-
-/*** Delegates ***/
-
-public protocol HFCardCollectionViewLayoutDelegate : UICollectionViewDelegate {
-    
-    /// Asks if the card at the specific index can be selected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter canSelectCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canSelectCardAtIndex index: Int) -> Bool
-    
-    /// Asks if the card at the specific index can be unselected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter canUnselectCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool
-    
-    /// Feedback when the card at the given index will be selected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didSelectedCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int)
-    
-    /// Feedback when the card at the given index was selected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didSelectedCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int)
-    
-    /// Feedback when the card at the given index will be unselected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didUnselectedCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int)
-    
-    /// Feedback when the card at the given index was unselected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didUnselectedCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int)
-    
-}
-
-// Default implementation for HFCardCollectionViewLayoutDelegate
-extension HFCardCollectionViewLayoutDelegate {
-    
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canSelectCardAtIndex index: Int) -> Bool {
-        return true
-    }
-    
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool {
-        return true
-    }
-    
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int) {
-    }
-    
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int) {
-    }
-    
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int) {
-    }
-
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int) {
-    }
-    
-}
-
-
-/*** HFCardCollectionViewLayout class ***/
-
 /// The HFCardCollectionViewLayout provides a card stack layout not quite similar like the apps Reminder and Wallet.
-public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecognizerDelegate {
- 
+open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecognizerDelegate {
+    
     // MARK: Public Variables
     
     /// Only cards with index equal or greater than firstMovableIndex can be moved through the collectionView.
@@ -181,7 +55,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     /// Specifies the maximum height of the cards.
     ///
     /// But the height can be less if the frame size of collectionView is smaller.
-    /// 
+    ///
     /// Default: 0 (no height specified)
     @IBInspectable var cardMaximumHeight: CGFloat = 0 {
         didSet {
@@ -326,7 +200,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
             // do nothing, because the card is flipped
         } else if self.selectedIndex >= 0 && index >= 0 {
             if(self.collectionViewForceUnselect == false) {
-                if(collectionViewLayoutDelegate?.cardCollectionViewLayout(self, canUnselectCardAtIndex: self.selectedIndex) == false) {
+                if(collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, canUnselectCardAtIndex: self.selectedIndex) == false) {
                     return
                 }
             }
@@ -335,47 +209,47 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
                 self.flipSelectedCardBack(completion: {
                     self.collectionView?.isScrollEnabled = true
                     self.deinitializeSelectedCard()
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willUnselectCardAtIndex: self.selectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnselectCardAtIndex: self.selectedIndex)
                     self.selectedIndex = -1
                     self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                        collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectCardAtIndex: oldSelectedIndex)
+                        collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnselectCardAtIndex: oldSelectedIndex)
                         completion?()
                     })
                 })
             } else {
                 self.collectionView?.isScrollEnabled = true
                 self.deinitializeSelectedCard()
-                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willUnselectCardAtIndex: self.selectedIndex)
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnselectCardAtIndex: self.selectedIndex)
                 self.selectedIndex = -1
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectCardAtIndex: oldSelectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnselectCardAtIndex: oldSelectedIndex)
                     completion?()
                 })
             }
         } else {
             if(index < 0 && self.selectedIndex >= 0) {
                 self.deinitializeSelectedCard()
-                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willUnselectCardAtIndex: self.selectedIndex)
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnselectCardAtIndex: self.selectedIndex)
             }
             if index >= 0 {
                 self.selectedIndex = index
-                if(collectionViewLayoutDelegate?.cardCollectionViewLayout(self, canSelectCardAtIndex: index) == false) {
+                if(collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, canSelectCardAtIndex: index) == false) {
                     self.selectedIndex = -1
                     return
                 }
-                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willSelectCardAtIndex: index)
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willSelectCardAtIndex: index)
                 _ = self.initializeSelectedCard()
                 self.collectionView?.isScrollEnabled = false
                 
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didSelectCardAtIndex: self.selectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didSelectCardAtIndex: self.selectedIndex)
                     completion?()
                 })
             } else if(self.selectedIndex >= 0) {
                 self.selectedIndex = index
                 self.collectionView?.isScrollEnabled = true
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectCardAtIndex: oldSelectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnselectCardAtIndex: oldSelectedIndex)
                     completion?()
                 })
             }
@@ -525,7 +399,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     
     // MARK: Initialize HFCardCollectionViewLayout
     
-    fileprivate func installMoveCardsGestureRecognizer() {
+    internal func installMoveCardsGestureRecognizer() {
         self.movingCardGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.movingCardGestureHandler))
         self.movingCardGestureRecognizer?.minimumPressDuration = 0.49
         self.movingCardGestureRecognizer?.delegate = self
@@ -553,7 +427,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     
     // MARK: UICollectionViewLayout Overrides
     
-    override public var collectionViewContentSize: CGSize {
+    override open var collectionViewContentSize: CGSize {
         get {
             let contentHeight = (self.cardHeadHeight * CGFloat(self.collectionViewItemCount)) + self.spaceAtTopForBackgroundView + self.spaceAtBottom
             let contentWidth = self.collectionView!.frame.width - (contentInset.left + contentInset.right)
@@ -561,7 +435,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
         }
     }
     
-    override public func prepare() {
+    override open func prepare() {
         super.prepare()
         
         self.collectionViewItemCount = self.collectionView!.numberOfItems(inSection: 0)
@@ -574,22 +448,22 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
         self.cardCollectionViewLayoutAttributes = self.generateCardCollectionViewLayoutAttributes()
     }
     
-    override public func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return self.cardCollectionViewLayoutAttributes[indexPath.item]
     }
     
-    override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes =  self.cardCollectionViewLayoutAttributes.filter { (layout) -> Bool in
             return (layout.frame.intersects(rect))
         }
         return attributes
     }
     
-    override public func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     
-    override public func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    override open func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         let proposedContentOffsetY = proposedContentOffset.y + self.collectionView!.contentInset.top
         if(self.spaceAtTopShouldSnap == true && self.spaceAtTopForBackgroundView > 0) {
             if(proposedContentOffsetY > 0 && proposedContentOffsetY < self.spaceAtTopForBackgroundView) {

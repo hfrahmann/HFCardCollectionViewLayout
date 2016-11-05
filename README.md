@@ -16,15 +16,38 @@ pod 'HFCardCollectionViewLayout'
 
 # Implementation
 
-Just set *HFCardCollectionViewLayout* as the custom layout class.
+Just set *HFCardCollectionViewLayout* as the custom layout class and the *HFCardCollectionView* as the UICollectionView class.
+
 
 ![CollectionView_LayoutClass](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CollectionView_LayoutClass.png)
 
 There is also a cell class called **HFCardCollectionViewCell** containing rounded corners and a shadow.
-But this Cell has no dependency on the *HFCardCollectionViewLayout*.
-That means you can use your own *UICollectionViewCell*
 
 **Important: This collectionView layout does support only one section!**
+
+
+## Custom HFCardCollectionViewCell
+
+If you want to create your own Card Cell without inherit from *HFCardCollectionViewCell* you need to copy the following function so the card can keep the Z index and has no interaction when the card is **not** selected.
+
+```swift
+class HFCardCollectionViewCell: UICollectionViewCell {
+
+    // Important for updating the Z index
+    // and setting the flag 'isUserInteractionEnabled'
+    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
+            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
+            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
+        } else {
+            self.contentView.isUserInteractionEnabled = true
+        }
+    }
+    
+}
+```
+
 
 ## Delegate
 

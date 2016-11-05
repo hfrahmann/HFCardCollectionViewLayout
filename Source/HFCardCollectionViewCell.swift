@@ -13,13 +13,13 @@ import QuartzCore
 ///
 /// This Cell has no dependency on the HFCardCollectionViewLayout.
 /// So you can create your own UICollectionViewCell without extending from this class.
-public class HFCardCollectionViewCell: UICollectionViewCell {
+open class HFCardCollectionViewCell: UICollectionViewCell {
     
     private var firstBackgroundColor: UIColor?
     
     // MARK: Overrides
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         
         self.setupLayer(self)
@@ -31,7 +31,7 @@ public class HFCardCollectionViewCell: UICollectionViewCell {
     }
     
     // Pass the backgroundColor to contentView
-    override public var backgroundColor: UIColor? {
+    override open var backgroundColor: UIColor? {
         set {
             if(self.firstBackgroundColor == nil) {
                 self.firstBackgroundColor = newValue
@@ -44,7 +44,19 @@ public class HFCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    override public var bounds: CGRect {
+    // Important for updating the Z index
+    // and setting the flag 'isUserInteractionEnabled'
+    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
+            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
+            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
+        } else {
+            self.contentView.isUserInteractionEnabled = true
+        }
+    }
+    
+    override open var bounds: CGRect {
         didSet {
             let shadowPath = UIBezierPath(rect: self.bounds).cgPath
             self.layer.shadowPath = shadowPath
@@ -53,7 +65,7 @@ public class HFCardCollectionViewCell: UICollectionViewCell {
     
     // The HFCardCollectionViewLayout will create a snapshot of this cell as the moving card view.
     // This Function will recreate the shadows to the snapshotView.
-    override public func snapshotView(afterScreenUpdates afterUpdates: Bool) -> UIView? {
+    override open func snapshotView(afterScreenUpdates afterUpdates: Bool) -> UIView? {
         let snapshotView = UIView(frame: self.frame)
         if let snapshotOfContentView = self.contentView.snapshotView(afterScreenUpdates: afterUpdates) {
             snapshotView.addSubview(snapshotOfContentView)
