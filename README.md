@@ -28,7 +28,7 @@ That means you can use your own *UICollectionViewCell*
 ## Delegates
 
 These are the methods of the **HFCardCollectionViewLayoutDelegate** to control the card selection.
-To use the methods you have to connect it to the *delegate* variable of *HFCardCollectionViewLayout*.
+The *HFCardCollectionViewLayoutDelegate* extends from *UICollectionViewDelete*.
 
 ```swift
 /// Asks if the card at the specific index can be selected.

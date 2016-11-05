@@ -81,7 +81,7 @@ public protocol HFCardCollectionViewCellDelegate {
     
 }
 
-public protocol HFCardCollectionViewLayoutDelegate {
+public protocol HFCardCollectionViewLayoutDelegate : UICollectionViewDelegate {
     
     /// Asks if the card at the specific index can be selected.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
@@ -293,9 +293,6 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     /// ReadOnly.
     private(set) var selectedIndex: Int = -1
     
-    /// Delegate object of protocol HFCardCollectionViewLayoutDelegate
-    @IBOutlet public var delegate: AnyObject?
-    
     // MARK: Public Actions
     
     /// Action for the InterfaceBuilder to flip back the selected card.
@@ -315,7 +312,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     /// - Parameter index: The index of the card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
     public func selectCardAt(index: Int, completion: (() -> Void)? = nil) {
-        let collectionViewLayoutDelegate = self.delegate as? HFCardCollectionViewLayoutDelegate
+        let collectionViewLayoutDelegate = self.collectionView?.delegate as? HFCardCollectionViewLayoutDelegate
         
         if self.selectedIndex >= 0 && self.selectedIndex == index && self.selectedCardIsFlipped == true {
             // do nothing, because the card is flipped

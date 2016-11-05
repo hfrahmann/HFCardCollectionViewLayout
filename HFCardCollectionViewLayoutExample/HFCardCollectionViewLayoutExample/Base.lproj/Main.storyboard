@@ -691,7 +691,7 @@
             </objects>
             <point key="canvasLocation" x="-447" y="232"/>
         </scene>
-        <!--Delegate-->
+        <!--Example-->
         <scene sceneID="Lrx-gp-DKr">
             <objects>
                 <collectionViewController id="s9b-JA-uYK" customClass="ExampleViewController" customModule="HFCardCollectionViewLayoutExample" customModuleProvider="target" sceneMemberID="viewController">
@@ -699,11 +699,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="384" height="512"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewLayout key="collectionViewLayout" id="Fz7-Ad-gwd" customClass="HFCardCollectionViewLayout" customModule="HFCardCollectionViewLayoutExample" customModuleProvider="target">
-                            <connections>
-                                <outlet property="delegate" destination="s9b-JA-uYK" id="JpV-cZ-PGw"/>
-                            </connections>
-                        </collectionViewLayout>
+                        <collectionViewLayout key="collectionViewLayout" id="Fz7-Ad-gwd" customClass="HFCardCollectionViewLayout" customModule="HFCardCollectionViewLayoutExample" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CardCell" id="8is-Ks-sWM" customClass="ExampleCollectionViewCell" customModule="HFCardCollectionViewLayoutExample" customModuleProvider="target">
                                 <rect key="frame" x="32" y="0.0" width="320" height="315"/>
