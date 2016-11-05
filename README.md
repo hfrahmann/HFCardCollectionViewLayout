@@ -10,7 +10,7 @@ The HFCardCollectionViewLayout provides a card stack layout not quite similar li
 Install it with cocoapods or just use the files inside the *Source* directory.
 
 ```
-pod "HFCardCollectionViewLayout"
+pod 'HFCardCollectionViewLayout'
 ```
 
 
