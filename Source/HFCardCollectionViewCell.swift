@@ -44,18 +44,6 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // Important for updating the Z index
-    // and setting the flag 'isUserInteractionEnabled'
-    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
-            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
-            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
-        } else {
-            self.contentView.isUserInteractionEnabled = true
-        }
-    }
-    
     override open var bounds: CGRect {
         didSet {
             let shadowPath = UIBezierPath(rect: self.bounds).cgPath

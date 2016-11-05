@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		B1472D191DCA7CDD007464CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1472D181DCA7CDD007464CA /* QuartzCore.framework */; };
 		B1472D1B1DCA8BBE007464CA /* ExampleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1472D1A1DCA8BBE007464CA /* ExampleCollectionViewCell.swift */; };
-		B16EAF341DCE2C3B00AAF98C /* HFCardCollectionViewLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EAF331DCE2C3B00AAF98C /* HFCardCollectionViewLayoutDelegate.swift */; };
-		B16EAF361DCE2CA600AAF98C /* HFCardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EAF351DCE2CA600AAF98C /* HFCardCollectionView.swift */; };
-		B16EAF381DCE2CFF00AAF98C /* HFCardCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16EAF371DCE2CFF00AAF98C /* HFCardCollectionViewLayoutAttributes.swift */; };
 		EE3569391DCA32DC0077790A /* HFCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3569381DCA32DC0077790A /* HFCardCollectionViewCell.swift */; };
 		EEBBC63A1DC9E19E00BBC1EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBBC6391DC9E19E00BBC1EE /* AppDelegate.swift */; };
 		EEBBC63C1DC9E19E00BBC1EE /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBBC63B1DC9E19E00BBC1EE /* ExampleViewController.swift */; };
@@ -25,9 +22,6 @@
 /* Begin PBXFileReference section */
 		B1472D181DCA7CDD007464CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B1472D1A1DCA8BBE007464CA /* ExampleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleCollectionViewCell.swift; sourceTree = "<group>"; };
-		B16EAF331DCE2C3B00AAF98C /* HFCardCollectionViewLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFCardCollectionViewLayoutDelegate.swift; sourceTree = "<group>"; };
-		B16EAF351DCE2CA600AAF98C /* HFCardCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFCardCollectionView.swift; sourceTree = "<group>"; };
-		B16EAF371DCE2CFF00AAF98C /* HFCardCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFCardCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		EE3569381DCA32DC0077790A /* HFCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		EEBBC6361DC9E19E00BBC1EE /* HFCardCollectionViewLayoutExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HFCardCollectionViewLayoutExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEBBC6391DC9E19E00BBC1EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,9 +92,6 @@
 			children = (
 				EEBBC64C1DC9E1DA00BBC1EE /* HFCardCollectionViewLayout.swift */,
 				EE3569381DCA32DC0077790A /* HFCardCollectionViewCell.swift */,
-				B16EAF351DCE2CA600AAF98C /* HFCardCollectionView.swift */,
-				B16EAF331DCE2C3B00AAF98C /* HFCardCollectionViewLayoutDelegate.swift */,
-				B16EAF371DCE2CFF00AAF98C /* HFCardCollectionViewLayoutAttributes.swift */,
 			);
 			name = Source;
 			path = ../Source;
@@ -179,12 +170,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B16EAF381DCE2CFF00AAF98C /* HFCardCollectionViewLayoutAttributes.swift in Sources */,
 				EE3569391DCA32DC0077790A /* HFCardCollectionViewCell.swift in Sources */,
 				EEBBC64F1DC9E23700BBC1EE /* MenuTableViewController.swift in Sources */,
-				B16EAF341DCE2C3B00AAF98C /* HFCardCollectionViewLayoutDelegate.swift in Sources */,
 				EEBBC64D1DC9E1DA00BBC1EE /* HFCardCollectionViewLayout.swift in Sources */,
-				B16EAF361DCE2CA600AAF98C /* HFCardCollectionView.swift in Sources */,
 				B1472D1B1DCA8BBE007464CA /* ExampleCollectionViewCell.swift in Sources */,
 				EEBBC63C1DC9E19E00BBC1EE /* ExampleViewController.swift in Sources */,
 				EEBBC63A1DC9E19E00BBC1EE /* AppDelegate.swift in Sources */,

@@ -5,54 +5,32 @@ The HFCardCollectionViewLayout provides a card stack layout not quite similar li
 ![Screenplay](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/Screenplay.gif)
 
 
-# Installation
+## Installation
 
-Install it with cocoapods or just use the files inside the *Source* directory.
+Install it with cocoapods or just use the files inside the **Source** directory.
 
 ```
 pod 'HFCardCollectionViewLayout'
 ```
 
 
-# Implementation
+## Implementation
 
-Just set *HFCardCollectionViewLayout* as the custom layout class and the *HFCardCollectionView* as the UICollectionView class.
+Just set *HFCardCollectionViewLayout* as the custom layout class in your UICollectionView.
 
 
 ![CollectionView_LayoutClass](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CollectionView_LayoutClass.png)
 
 There is also a cell class called **HFCardCollectionViewCell** containing rounded corners and a shadow.
+But this class has no dependency on the *HFCardCollectionViewLayout*.
 
 **Important: This collectionView layout does support only one section!**
-
-
-## Custom HFCardCollectionViewCell
-
-If you want to create your own Card Cell without inherit from *HFCardCollectionViewCell* you need to copy the following function so the card can keep the Z index and has no interaction when the card is **not** selected.
-
-```swift
-class HFCardCollectionViewCell: UICollectionViewCell {
-
-    // Important for updating the Z index
-    // and setting the flag 'isUserInteractionEnabled'
-    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
-            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
-            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
-        } else {
-            self.contentView.isUserInteractionEnabled = true
-        }
-    }
-    
-}
-```
 
 
 ## Delegate
 
 These are the delegate functions of the **HFCardCollectionViewLayoutDelegate** to control the card selection.
-The *HFCardCollectionViewLayoutDelegate* inherits from *UICollectionViewDelete*.
+*HFCardCollectionViewLayoutDelegate* inherits from *UICollectionViewDelete* so you don't need to connect a further delegate.
 
 ```swift
 /// Asks if the card at the specific index can be selected.
@@ -192,6 +170,6 @@ public func flipSelectedCardBack(completion: (() -> Void)? = nil)
 ```
 
 
-# License
+## License
 
 MIT License

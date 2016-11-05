@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.1.6
+
+- Added the UICollectionViewCell and UICollectionView extension (again)
+
+
 ## 0.1.5
 
 - Made the HFCardCollectionViewCell and HFCardCollectionViewLayout open instead of public

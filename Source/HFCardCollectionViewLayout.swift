@@ -8,6 +8,41 @@
 
 import UIKit
 
+/// Extended delegate functions to control the card selection.
+@objc public protocol HFCardCollectionViewLayoutDelegate : UICollectionViewDelegate {
+    
+    /// Asks if the card at the specific index can be selected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter canSelectCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canSelectCardAtIndex index: Int) -> Bool
+    
+    /// Asks if the card at the specific index can be unselected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter canUnselectCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool
+    
+    /// Feedback when the card at the given index will be selected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter didSelectedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int)
+    
+    /// Feedback when the card at the given index was selected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter didSelectedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int)
+    
+    /// Feedback when the card at the given index will be unselected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter didUnselectedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int)
+    
+    /// Feedback when the card at the given index was unselected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter didUnselectedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int)
+    
+}
+
 /// The HFCardCollectionViewLayout provides a card stack layout not quite similar like the apps Reminder and Wallet.
 open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecognizerDelegate {
     
@@ -959,6 +994,66 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             }
         }
         return true
+    }
+    
+}
+
+/*** Layout Attributes ***/
+
+open class HFCardCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+    
+    /// Specifies if the CardCell is expanded.
+    public var isExpand = false
+    
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        let attribute = super.copy(with: zone) as! HFCardCollectionViewLayoutAttributes
+        attribute.isExpand = isExpand
+        return attribute
+    }
+    
+}
+
+/*** Extensions ***/
+
+extension UICollectionView {
+    
+    override open func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        if let collectionViewLayout = self.collectionViewLayout as? HFCardCollectionViewLayout {
+            let gestureClassName = String(describing: type(of: gestureRecognizer))
+            let gestureString = String(describing: gestureRecognizer)
+            // Prevent default behaviour of 'installsStandardGestureForInteractiveMovement = true' and install a custom reorder gesture recognizer.
+            if(gestureClassName == "UILongPressGestureRecognizer" && gestureString.range(of: "action=_handleReorderingGesture") != nil) {
+                collectionViewLayout.installMoveCardsGestureRecognizer()
+                return
+            }
+        }
+        super.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    override open func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
+        if self.collectionViewLayout is HFCardCollectionViewLayout {
+            if(self.isScrollEnabled == true) {
+                super.setContentOffset(contentOffset, animated: animated)
+            }
+        } else {
+            super.setContentOffset(contentOffset, animated: animated)
+        }
+    }
+    
+}
+
+extension UICollectionViewCell {
+    
+    // Important for updating the Z index
+    // and setting the flag 'isUserInteractionEnabled'
+    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
+            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
+            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
+        } else {
+            self.contentView.isUserInteractionEnabled = true
+        }
     }
     
 }
