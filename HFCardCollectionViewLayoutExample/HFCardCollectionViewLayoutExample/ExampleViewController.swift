@@ -78,9 +78,10 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     
     @IBAction func addCardAction() {
         let index = 0
-        if(self.colorArray.count == 1) {
+        if(self.colorArray.count == 1 || self.cardCollectionViewLayout!.selectedIndex >= 0) {
             self.cardCollectionViewLayout?.unselectCard(completion: { 
                 self.colorArray.insert(self.getRandomColor(), at: index)
+                self.collectionView?.insertItems(at: [IndexPath(item: index, section: 0)])
             })
         } else {
             self.colorArray.insert(self.getRandomColor(), at: index)
