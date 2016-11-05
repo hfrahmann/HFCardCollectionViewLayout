@@ -127,7 +127,7 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 @IBInspectable var scrollShouldSnapCardHead: Bool = false
 
 /// Cards are stopping at top while scrolling.
-@IBInspectable open var scrollStopCardsAtTop: Bool = true
+@IBInspectable var scrollStopCardsAtTop: Bool = true
 
 /// Contains the selected index.
 /// ReadOnly.
