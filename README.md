@@ -71,7 +71,7 @@ func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout
 
 You also have access to the options and (some) actions at the *HFCardCollectionViewLayout* object in the interface builder.
 
-![CardLayoutOptions2](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CardLayoutOptions2.png)
+![CardLayoutOptions2](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CardLayoutOptions.png)
 ![CardLayoutActions](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CardLayoutActions.png)
 
 These are the public variables and functions of *HFCardCollectionViewLayout*.
@@ -125,6 +125,9 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 
 /// The scrollView should snap the cardhead to the top.
 @IBInspectable var scrollShouldSnapCardHead: Bool = false
+
+/// Cards are stopping at top while scrolling.
+@IBInspectable open var scrollStopCardsAtTop: Bool = true
 
 /// Contains the selected index.
 /// ReadOnly.

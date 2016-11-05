@@ -618,8 +618,41 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="VKM-n5-8yJ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="V0m-21-aAV">
                                         <rect key="frame" x="0.0" y="939" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V0m-21-aAV" id="Td4-fL-QBe">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V7e-cA-Rnh">
+                                                    <rect key="frame" x="318" y="6" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="9OB-PM-q3U"/>
+                                                        <constraint firstAttribute="width" constant="49" id="wgJ-3f-a8n"/>
+                                                    </constraints>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scrollStopCardsAtTop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EcN-Hr-rug">
+                                                    <rect key="frame" x="8" y="11" width="302" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="7gK-Oz-2br"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="V7e-cA-Rnh" secondAttribute="trailing" constant="8" id="0H0-Iu-aUM"/>
+                                                <constraint firstItem="V7e-cA-Rnh" firstAttribute="leading" secondItem="EcN-Hr-rug" secondAttribute="trailing" constant="8" id="Ha8-oq-kHc"/>
+                                                <constraint firstItem="EcN-Hr-rug" firstAttribute="leading" secondItem="Td4-fL-QBe" secondAttribute="leadingMargin" id="Yf4-0b-jhR"/>
+                                                <constraint firstItem="V7e-cA-Rnh" firstAttribute="centerY" secondItem="Td4-fL-QBe" secondAttribute="centerY" id="bc8-n6-IKO"/>
+                                                <constraint firstItem="EcN-Hr-rug" firstAttribute="centerY" secondItem="Td4-fL-QBe" secondAttribute="centerY" id="ck4-Kb-12H"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="VKM-n5-8yJ">
+                                        <rect key="frame" x="0.0" y="983" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VKM-n5-8yJ" id="HM0-6R-DyL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -658,6 +691,7 @@
                         <outlet property="switchCardShouldExpandHeadHeight" destination="Bgz-SK-LGN" id="AT5-m5-yxB"/>
                         <outlet property="switchCardShouldStretchAtScrollTop" destination="F5o-K5-Wfc" id="U5y-wO-0Q3"/>
                         <outlet property="switchScrollShouldSnapCardHead" destination="kP4-jp-13I" id="E3i-5l-NXi"/>
+                        <outlet property="switchScrollStopCardsAtTop" destination="V7e-cA-Rnh" id="jPB-0A-kqC"/>
                         <outlet property="switchSpaceAtTopShouldSnap" destination="cZF-Ol-MNM" id="dNs-o1-fJA"/>
                         <outlet property="textfieldBottomCardLookoutMargin" destination="eou-3u-VzP" id="Ff5-fP-kYi"/>
                         <outlet property="textfieldBottomNumberOfStackedCards" destination="4L3-Qa-Mj3" id="olh-fb-HOj"/>

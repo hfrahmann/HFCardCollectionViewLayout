@@ -23,6 +23,7 @@ struct CardLayoutSetupOptions {
     var scrollAreaTop: CGFloat = 120
     var scrollAreaBottom: CGFloat = 120
     var scrollShouldSnapCardHead: Bool = false
+    var scrollStopCardsAtTop: Bool = true
     
     var numberOfCards: Int = 15
 }
@@ -49,6 +50,7 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var textfieldScrollAreaTop: UITextField?
     @IBOutlet var textfieldScrollAreaBottom: UITextField?
     @IBOutlet var switchScrollShouldSnapCardHead: UISwitch?
+    @IBOutlet var switchScrollStopCardsAtTop: UISwitch?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +87,7 @@ class MenuTableViewController: UITableViewController {
         self.textfieldScrollAreaTop?.text               = self.stringFromFloat(self.defaults.scrollAreaTop)
         self.textfieldScrollAreaBottom?.text            = self.stringFromFloat(self.defaults.scrollAreaBottom)
         self.switchScrollShouldSnapCardHead?.isOn       = self.defaults.scrollShouldSnapCardHead
+        self.switchScrollStopCardsAtTop?.isOn           = self.defaults.scrollStopCardsAtTop
     }
     
     // MARK: Navigation
@@ -109,6 +112,7 @@ class MenuTableViewController: UITableViewController {
             layoutOptions.scrollAreaTop                 = self.getFloatFromTextfield(self.textfieldScrollAreaTop!)
             layoutOptions.scrollAreaBottom              = self.getFloatFromTextfield(self.textfieldScrollAreaBottom!)
             layoutOptions.scrollShouldSnapCardHead      = self.switchScrollShouldSnapCardHead!.isOn
+            layoutOptions.scrollStopCardsAtTop          = self.switchScrollStopCardsAtTop!.isOn
             controller.cardLayoutOptions = layoutOptions
             
             if(segue.identifier == "AsRootController") {

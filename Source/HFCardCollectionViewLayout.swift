@@ -205,6 +205,15 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Default: false
     @IBInspectable open var scrollShouldSnapCardHead: Bool = false
     
+    /// Cards are stopping at top while scrolling.
+    ///
+    /// Default: true
+    @IBInspectable open var scrollStopCardsAtTop: Bool = true {
+        didSet {
+            self.collectionView?.performBatchUpdates({ self.invalidateLayout() }, completion: nil)
+        }
+    }
+    
     /// Contains the selected index.
     /// ReadOnly.
     private(set) open var selectedIndex: Int = -1
@@ -637,11 +646,12 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         if(self.contentOffsetTop >= 0 && self.contentOffsetTop <= self.spaceAtTopForBackgroundView) {
             attribute.frame = currentFrame
         } else if(self.contentOffsetTop > self.spaceAtTopForBackgroundView) {
-            attribute.isHidden = (currentIndex < startIndex)
+            attribute.isHidden = (self.scrollStopCardsAtTop == true && currentIndex < startIndex)
+            
             if(self.movingCardSelectedIndex >= 0 && currentIndex + 1 == self.movingCardSelectedIndex) {
                 attribute.isHidden = false
             }
-            if (currentIndex != 0 && currentIndex <= startIndex) || (currentIndex == 0 && (self.contentOffsetTop - self.spaceAtTopForBackgroundView) > 0) {
+            if (self.scrollStopCardsAtTop == true && ((currentIndex != 0 && currentIndex <= startIndex) || (currentIndex == 0 && (self.contentOffsetTop - self.spaceAtTopForBackgroundView) > 0))) {
                 var newFrame = currentFrame
                 newFrame.origin.y = self.contentOffsetTop
                 attribute.frame = newFrame
@@ -836,7 +846,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                             let movingCellAttr = self.collectionView?.layoutAttributesForItem(at: currentTouchedIndexPath)
                             if(movingCell != nil) {
                                 let cardHeadHeight = self.calculateCardHeadHeight()
-                                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                                UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
                                     movingCell?.frame.origin.y -= cardHeadHeight
                                 }, completion: { (finished) in
                                     movingCellAttr?.frame.origin.y -= cardHeadHeight

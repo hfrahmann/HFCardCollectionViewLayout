@@ -143,6 +143,7 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
             self.cardCollectionViewLayout?.scrollAreaTop = cardLayoutOptions.scrollAreaTop
             self.cardCollectionViewLayout?.scrollAreaBottom = cardLayoutOptions.scrollAreaBottom
             self.cardCollectionViewLayout?.scrollShouldSnapCardHead = cardLayoutOptions.scrollShouldSnapCardHead
+            self.cardCollectionViewLayout?.scrollStopCardsAtTop = cardLayoutOptions.scrollStopCardsAtTop
             
             let count = cardLayoutOptions.numberOfCards
             for _ in 0..<count {

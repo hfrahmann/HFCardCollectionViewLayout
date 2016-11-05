@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.2.1
+
+- Added option 'scrollStopCardsAtTop'
+
+
 ## 0.2
 
 - Added the UICollectionViewCell and UICollectionView extension (again)
