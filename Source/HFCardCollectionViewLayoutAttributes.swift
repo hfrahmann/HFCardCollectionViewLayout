@@ -8,12 +8,12 @@
 
 import UIKit
 
-class HFCardCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+open class HFCardCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
     /// Specifies if the CardCell is expanded.
-    var isExpand = false
+    public var isExpand = false
     
-    override func copy(with zone: NSZone? = nil) -> Any {
+    override open func copy(with zone: NSZone? = nil) -> Any {
         let attribute = super.copy(with: zone) as! HFCardCollectionViewLayoutAttributes
         attribute.isExpand = isExpand
         return attribute

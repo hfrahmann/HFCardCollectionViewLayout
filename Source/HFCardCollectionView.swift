@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HFCardCollectionView: UICollectionView {
+open class HFCardCollectionView: UICollectionView {
 
     open override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
         if let collectionViewLayout = self.collectionViewLayout as? HFCardCollectionViewLayout {
