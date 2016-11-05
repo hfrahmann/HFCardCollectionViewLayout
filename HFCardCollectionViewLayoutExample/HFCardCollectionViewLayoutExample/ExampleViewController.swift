@@ -77,8 +77,6 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     }
     
     @IBAction func addCardAction() {
-        self.cardCollectionViewLayout?.selectCardAt(index: -1)
-        return
         let index = 0
         if(self.colorArray.count == 1) {
             self.cardCollectionViewLayout?.unselectCard(completion: { 
