@@ -1,0 +1,16 @@
+PODS:
+  - HFCardCollectionViewLayout (0.1.6)
+
+DEPENDENCIES:
+  - HFCardCollectionViewLayout (from `../`)
+
+EXTERNAL SOURCES:
+  HFCardCollectionViewLayout:
+    :path: ../
+
+SPEC CHECKSUMS:
+  HFCardCollectionViewLayout: 70638c0f8f851c3174aa7574091614d1f9931404
+
+PODFILE CHECKSUM: 8978cf90a8ff92243ea894dfa2a97c87732c55f0
+
+COCOAPODS: 1.2.0.beta.1

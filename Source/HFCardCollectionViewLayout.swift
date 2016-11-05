@@ -51,14 +51,14 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Only cards with index equal or greater than firstMovableIndex can be moved through the collectionView.
     ///
     /// Default: 0
-    @IBInspectable var firstMovableIndex: Int = 0
+    @IBInspectable open var firstMovableIndex: Int = 0
     
     /// Specifies the height that is showing the cardhead when the collectionView is showing all cards.
     ///
     /// The minimum value is 20.
     ///
     /// Default: 80
-    @IBInspectable var cardHeadHeight: CGFloat = 80 {
+    @IBInspectable open var cardHeadHeight: CGFloat = 80 {
         didSet {
             if(cardHeadHeight < 20) {
                 cardHeadHeight = 20
@@ -72,7 +72,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// the cardHeadHeight will be expanded to equally fill the height.
     ///
     /// Default: true
-    @IBInspectable var cardShouldExpandHeadHeight: Bool = true {
+    @IBInspectable open var cardShouldExpandHeadHeight: Bool = true {
         didSet {
             self.collectionView?.performBatchUpdates({ self.invalidateLayout() }, completion: nil)
         }
@@ -81,7 +81,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Stretch the cards when scrolling up
     ///
     /// Default: true
-    @IBInspectable var cardShouldStretchAtScrollTop: Bool = true {
+    @IBInspectable open var cardShouldStretchAtScrollTop: Bool = true {
         didSet {
             self.collectionView?.performBatchUpdates({ self.invalidateLayout() }, completion: nil)
         }
@@ -92,7 +92,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// But the height can be less if the frame size of collectionView is smaller.
     ///
     /// Default: 0 (no height specified)
-    @IBInspectable var cardMaximumHeight: CGFloat = 0 {
+    @IBInspectable open var cardMaximumHeight: CGFloat = 0 {
         didSet {
             if(cardMaximumHeight < 0) {
                 cardMaximumHeight = 0
@@ -107,7 +107,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Value must be between 0 and 10
     ///
     /// Default: 5
-    @IBInspectable var bottomNumberOfStackedCards: Int = 5 {
+    @IBInspectable open var bottomNumberOfStackedCards: Int = 5 {
         didSet {
             if(bottomNumberOfStackedCards < 0) {
                 bottomNumberOfStackedCards = 0
@@ -124,7 +124,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// All bottom stacked cards are scaled to produce the 3D effect.
     ///
     /// Default: true
-    @IBInspectable var bottomStackedCardsShouldScale: Bool = true {
+    @IBInspectable open var bottomStackedCardsShouldScale: Bool = true {
         didSet {
             self.collectionView?.performBatchUpdates({ self.invalidateLayout() }, completion: nil)
         }
@@ -135,7 +135,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Value can be between 0 and 20
     ///
     /// Default: 10
-    @IBInspectable var bottomCardLookoutMargin: CGFloat = 10 {
+    @IBInspectable open var bottomCardLookoutMargin: CGFloat = 10 {
         didSet {
             if(bottomCardLookoutMargin < 0) {
                 bottomCardLookoutMargin = 0
@@ -152,7 +152,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// An additional topspace to show the top of the collectionViews backgroundView.
     ///
     /// Default: 0
-    @IBInspectable var spaceAtTopForBackgroundView: CGFloat = 0 {
+    @IBInspectable open var spaceAtTopForBackgroundView: CGFloat = 0 {
         didSet {
             if(spaceAtTopForBackgroundView < 0) {
                 spaceAtTopForBackgroundView = 0
@@ -165,12 +165,12 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Snaps the scrollView if the contentOffset is on the 'spaceAtTopForBackgroundView'
     ///
     /// Default: true
-    @IBInspectable var spaceAtTopShouldSnap: Bool = true
+    @IBInspectable open var spaceAtTopShouldSnap: Bool = true
     
     /// Additional space at the bottom to expand the contentsize of the collectionView.
     ///
     /// Default: 0
-    @IBInspectable var spaceAtBottom: CGFloat = 0 {
+    @IBInspectable open var spaceAtBottom: CGFloat = 0 {
         didSet {
             self.collectionView?.performBatchUpdates({ self.invalidateLayout() }, completion: nil)
         }
@@ -179,7 +179,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Area the top where to autoscroll while moving a card.
     ///
     /// Default 120
-    @IBInspectable var scrollAreaTop: CGFloat = 120 {
+    @IBInspectable open var scrollAreaTop: CGFloat = 120 {
         didSet {
             if(scrollAreaTop < 0) {
                 scrollAreaTop = 0
@@ -191,7 +191,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Area ot the bottom where to autoscroll while moving a card.
     ///
     /// Default 120
-    @IBInspectable var scrollAreaBottom: CGFloat = 120 {
+    @IBInspectable open var scrollAreaBottom: CGFloat = 120 {
         didSet {
             if(scrollAreaBottom < 0) {
                 scrollAreaBottom = 0
@@ -203,21 +203,21 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// The scrollView should snap the cardhead to the top.
     ///
     /// Default: false
-    @IBInspectable var scrollShouldSnapCardHead: Bool = false
+    @IBInspectable open var scrollShouldSnapCardHead: Bool = false
     
     /// Contains the selected index.
     /// ReadOnly.
-    private(set) var selectedIndex: Int = -1
+    private(set) open var selectedIndex: Int = -1
     
     // MARK: Public Actions
     
     /// Action for the InterfaceBuilder to flip back the selected card.
-    @IBAction func flipBackSelectedCardAction() {
+    @IBAction open func flipBackSelectedCardAction() {
         self.flipSelectedCardBack()
     }
     
     /// Action for the InterfaceBuilder to unselect the selected card.
-    @IBAction func unselectSelectedCardAction() {
+    @IBAction open func unselectSelectedCardAction() {
         self.unselectCard()
     }
     
@@ -227,7 +227,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     ///
     /// - Parameter index: The index of the card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    public func selectCardAt(index: Int, completion: (() -> Void)? = nil) {
+    open func selectCardAt(index: Int, completion: (() -> Void)? = nil) {
         let collectionViewLayoutDelegate = self.collectionView?.delegate as? HFCardCollectionViewLayoutDelegate
         let oldSelectedIndex = self.selectedIndex
         
@@ -295,7 +295,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Unselect the selected card
     ///
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    public func unselectCard(completion: (() -> Void)? = nil) {
+    open func unselectCard(completion: (() -> Void)? = nil) {
         if(self.selectedIndex == -1) {
             completion?()
         } else if(self.selectedCardIsFlipped == true) {
@@ -314,7 +314,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     ///
     /// - Parameter toView: The view for the backview of te card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    public func flipSelectedCard(toView: UIView, completion: (() -> Void)? = nil) {
+    open func flipSelectedCard(toView: UIView, completion: (() -> Void)? = nil) {
         if(self.selectedCardIsFlipped == true) {
             return
         }
@@ -343,7 +343,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Flips the flipped card back to the frontview.
     ///
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    public func flipSelectedCardBack(completion: (() -> Void)? = nil) {
+    open func flipSelectedCardBack(completion: (() -> Void)? = nil) {
         if(self.selectedCardIsFlipped == false) {
             return
         }

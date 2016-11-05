@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 0.1.6
+## 0.2
 
 - Added the UICollectionViewCell and UICollectionView extension (again)
 

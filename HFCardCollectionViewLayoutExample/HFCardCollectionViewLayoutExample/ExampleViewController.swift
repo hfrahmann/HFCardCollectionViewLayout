@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HFCardCollectionViewLayout
 
 class ExampleViewController : UICollectionViewController, HFCardCollectionViewLayoutDelegate {
     

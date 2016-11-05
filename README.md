@@ -18,11 +18,12 @@ pod 'HFCardCollectionViewLayout'
 
 Just set *HFCardCollectionViewLayout* as the custom layout class in your UICollectionView.
 
-
 ![CollectionView_LayoutClass](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CollectionView_LayoutClass.png)
+
 
 There is also a cell class called **HFCardCollectionViewCell** containing rounded corners and a shadow.
 But this class has no dependency on the *HFCardCollectionViewLayout*.
+It's only there to have a cell that looks like a card.
 
 **Important: This collectionView layout does support only one section!**
 

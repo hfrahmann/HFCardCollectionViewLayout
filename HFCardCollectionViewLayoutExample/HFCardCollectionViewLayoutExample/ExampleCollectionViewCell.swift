@@ -8,6 +8,7 @@
 
 import UIKit
 import QuartzCore
+import HFCardCollectionViewLayout
 
 class ExampleCollectionViewCell: HFCardCollectionViewCell {
     
