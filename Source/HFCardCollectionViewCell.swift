@@ -15,6 +15,8 @@ import QuartzCore
 /// So you can create your own UICollectionViewCell without extending from this class.
 public class HFCardCollectionViewCell: UICollectionViewCell {
     
+    private var firstBackgroundColor: UIColor?
+    
     // MARK: Overrides
     
     public override func awakeFromNib() {
@@ -25,11 +27,15 @@ public class HFCardCollectionViewCell: UICollectionViewCell {
         self.contentView.layer.masksToBounds = true
         self.contentView.layer.cornerRadius = 10
         self.contentView.clipsToBounds = true
+        self.contentView.backgroundColor = self.firstBackgroundColor
     }
     
     // Pass the backgroundColor to contentView
     override public var backgroundColor: UIColor? {
         set {
+            if(self.firstBackgroundColor == nil) {
+                self.firstBackgroundColor = newValue
+            }
             super.backgroundColor = .clear
             self.contentView.backgroundColor = newValue
         }
@@ -71,5 +77,5 @@ public class HFCardCollectionViewCell: UICollectionViewCell {
         forView.layer.shouldRasterize = true
         forView.clipsToBounds = false
     }
- 
+    
 }
