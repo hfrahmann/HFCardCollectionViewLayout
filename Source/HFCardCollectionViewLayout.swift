@@ -72,15 +72,6 @@ extension UICollectionViewCell {
 
 /*** Delegates ***/
 
-public protocol HFCardCollectionViewCellDelegate {
-    
-    /// This function is called to notify when the cell is selected.
-    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter hasCardSelected: true when the card is selected otherwise it is false.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected isSelected: Bool)
-    
-}
-
 public protocol HFCardCollectionViewLayoutDelegate : UICollectionViewDelegate {
     
     /// Asks if the card at the specific index can be selected.
@@ -93,15 +84,25 @@ public protocol HFCardCollectionViewLayoutDelegate : UICollectionViewDelegate {
     /// - Parameter canUnselectCardAtIndex: Index of the card.
     func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool
     
+    /// Feedback when the card at the given index will be selected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter didSelectedCardAtIndex: Index of the card.
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int)
+    
     /// Feedback when the card at the given index was selected.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
     /// - Parameter didSelectedCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectedCardAtIndex index: Int)
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int)
+    
+    /// Feedback when the card at the given index will be unselected.
+    /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+    /// - Parameter didUnselectedCardAtIndex: Index of the card.
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int)
     
     /// Feedback when the card at the given index was unselected.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
     /// - Parameter didUnselectedCardAtIndex: Index of the card.
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectedCardAtIndex index: Int)
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int)
     
 }
 
@@ -116,10 +117,16 @@ extension HFCardCollectionViewLayoutDelegate {
         return true
     }
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectedCardAtIndex index: Int) {
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int) {
     }
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectedCardAtIndex index: Int) {
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int) {
+    }
+    
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int) {
+    }
+
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int) {
     }
     
 }
@@ -313,12 +320,13 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
     public func selectCardAt(index: Int, completion: (() -> Void)? = nil) {
         let collectionViewLayoutDelegate = self.collectionView?.delegate as? HFCardCollectionViewLayoutDelegate
+        let oldSelectedIndex = self.selectedIndex
         
-        if self.selectedIndex >= 0 && self.selectedIndex == index && self.selectedCardIsFlipped == true {
+        if ((self.selectedIndex >= 0 && self.selectedIndex == index) || (self.selectedIndex >= 0 && index < 0)) && self.selectedCardIsFlipped == true {
             // do nothing, because the card is flipped
         } else if self.selectedIndex >= 0 && index >= 0 {
             if(self.collectionViewForceUnselect == false) {
-                if(collectionViewLayoutDelegate?.cardCollectionViewLayout(self, canUnselectCardAtIndex: index) == false) {
+                if(collectionViewLayoutDelegate?.cardCollectionViewLayout(self, canUnselectCardAtIndex: self.selectedIndex) == false) {
                     return
                 }
             }
@@ -327,40 +335,51 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
                 self.flipSelectedCardBack(completion: {
                     self.collectionView?.isScrollEnabled = true
                     self.deinitializeSelectedCard()
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willUnselectCardAtIndex: self.selectedIndex)
                     self.selectedIndex = -1
                     self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                        collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectedCardAtIndex: index)
+                        collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectCardAtIndex: oldSelectedIndex)
                         completion?()
                     })
                 })
             } else {
                 self.collectionView?.isScrollEnabled = true
                 self.deinitializeSelectedCard()
+                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willUnselectCardAtIndex: self.selectedIndex)
                 self.selectedIndex = -1
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectedCardAtIndex: index)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectCardAtIndex: oldSelectedIndex)
                     completion?()
                 })
             }
         } else {
-            if(index < 0) {
+            if(index < 0 && self.selectedIndex >= 0) {
                 self.deinitializeSelectedCard()
+                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willUnselectCardAtIndex: self.selectedIndex)
             }
-            self.selectedIndex = index
             if index >= 0 {
+                self.selectedIndex = index
                 if(collectionViewLayoutDelegate!.cardCollectionViewLayout(self, canSelectCardAtIndex: index) == false) {
                     self.selectedIndex = -1
                     return
                 }
+                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, willSelectCardAtIndex: index)
                 _ = self.initializeSelectedCard()
                 self.collectionView?.isScrollEnabled = false
-            } else {
+                
+                self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didSelectCardAtIndex: self.selectedIndex)
+                    completion?()
+                })
+            } else if(self.selectedIndex >= 0) {
+                self.selectedIndex = index
                 self.collectionView?.isScrollEnabled = true
+                self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didUnselectCardAtIndex: oldSelectedIndex)
+                    completion?()
+                })
             }
-            self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                collectionViewLayoutDelegate?.cardCollectionViewLayout(self, didSelectedCardAtIndex: index)
-                completion?()
-            })
+            self.selectedIndex = index
         }
     }
     
@@ -793,10 +812,6 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
             self.selectedCardPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.selectedCardPanGestureHandler))
             self.selectedCardPanGestureRecognizer?.delegate = self
             self.selectedCardCell?.addGestureRecognizer(self.selectedCardPanGestureRecognizer!)
-            
-            if let cellDelegate = cell as? HFCardCollectionViewCellDelegate {
-                cellDelegate.cardCollectionViewLayout(self, hasCardSelected: true)
-            }
             return true
         }
         return false
@@ -804,9 +819,6 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
     
     private func deinitializeSelectedCard() {
         if self.selectedCardCell != nil && self.selectedCardPanGestureRecognizer != nil {
-            if let cellDelegate = self.selectedCardCell as? HFCardCollectionViewCellDelegate {
-                cellDelegate.cardCollectionViewLayout(self, hasCardSelected: false)
-            }
             self.selectedCardCell?.removeGestureRecognizer(self.selectedCardPanGestureRecognizer!)
             self.selectedCardPanGestureRecognizer = nil
             self.selectedCardCell = nil

@@ -9,7 +9,7 @@
 import UIKit
 import QuartzCore
 
-class ExampleCollectionViewCell: HFCardCollectionViewCell, HFCardCollectionViewCellDelegate {
+class ExampleCollectionViewCell: HFCardCollectionViewCell {
     
     var cardCollectionViewLayout: HFCardCollectionViewLayout?
     
@@ -25,8 +25,7 @@ class ExampleCollectionViewCell: HFCardCollectionViewCell, HFCardCollectionViewC
         self.tableView?.scrollsToTop = false
     }
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected isSelected: Bool) {
-        self.cardCollectionViewLayout = collectionViewLayout
+    func cardIsSelected(_ isSelected: Bool) {
         self.buttonFlip?.isHidden = !isSelected
         self.tableView?.scrollsToTop = isSelected
     }
