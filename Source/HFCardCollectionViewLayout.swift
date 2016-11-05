@@ -359,7 +359,7 @@ public class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogn
             }
             if index >= 0 {
                 self.selectedIndex = index
-                if(collectionViewLayoutDelegate!.cardCollectionViewLayout(self, canSelectCardAtIndex: index) == false) {
+                if(collectionViewLayoutDelegate?.cardCollectionViewLayout(self, canSelectCardAtIndex: index) == false) {
                     self.selectedIndex = -1
                     return
                 }
