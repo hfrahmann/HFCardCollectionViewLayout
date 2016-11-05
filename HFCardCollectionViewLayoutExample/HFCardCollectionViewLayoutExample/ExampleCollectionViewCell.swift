@@ -25,10 +25,10 @@ class ExampleCollectionViewCell: HFCardCollectionViewCell, HFCardCollectionViewC
         self.tableView?.scrollsToTop = false
     }
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected: Bool) {
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected isSelected: Bool) {
         self.cardCollectionViewLayout = collectionViewLayout
-        self.buttonFlip?.isHidden = !hasCardSelected
-        self.tableView?.scrollsToTop = hasCardSelected
+        self.buttonFlip?.isHidden = !isSelected
+        self.tableView?.scrollsToTop = isSelected
     }
     
     @IBAction func buttonFlipAction() {

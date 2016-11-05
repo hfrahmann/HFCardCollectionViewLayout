@@ -20,14 +20,47 @@ Just set *HFCardCollectionViewLayout* as the custom layout class.
 
 ![CollectionView_LayoutClass](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CollectionView_LayoutClass.png)
 
-There is also a cell class called *HFCardCollectionViewCell* containing rounded corners and a shadow.
+There is also a cell class called **HFCardCollectionViewCell** containing rounded corners and a shadow.
 But this Cell has no dependency on the *HFCardCollectionViewLayout*.
 That means you can use your own *UICollectionViewCell*
 
-If you want to get notified when a card cell is selected implement the *HFCardCollectionViewCellDelegate* on your CollectionViewCell with the following method:
 
-```swift    
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected: Bool)
+## Delegates
+
+These are the methods of the **HFCardCollectionViewLayoutDelegate** to control the card selection.
+To use the methods you have to connect it to the *delegate* variable of *HFCardCollectionViewLayout*.
+
+```swift
+/// Asks if the card at the specific index can be selected.
+/// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+/// - Parameter canSelectCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canSelectCardAtIndex index: Int) -> Bool
+
+/// Asks if the card at the specific index can be unselected.
+/// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+/// - Parameter canUnselectCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool
+
+/// Feedback when the card at the given index was selected.
+/// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+/// - Parameter didSelectedCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectedCardAtIndex index: Int)
+
+/// Feedback when the card at the given index was unselected.
+/// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+/// - Parameter didUnselectedCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectedCardAtIndex index: Int)
+```
+
+
+
+If you want to get notified when a card cell is selected implement the **HFCardCollectionViewCellDelegate** on your CollectionViewCell with the following method:
+
+```swift
+/// This function is called to notify when the cell is selected.
+/// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
+/// - Parameter hasCardSelected: true when the card is selected otherwise it is false.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, hasCardSelected isSelected: Bool)
 ```
 
 
@@ -94,6 +127,8 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 /// ReadOnly.
 private(set) var selectedIndex: Int = -1
 
+/// Delegate object of protocol HFCardCollectionViewLayoutDelegate
+@IBOutlet public var delegate: AnyObject?
 
 /////////////// InterfaceBuilder Actions
 

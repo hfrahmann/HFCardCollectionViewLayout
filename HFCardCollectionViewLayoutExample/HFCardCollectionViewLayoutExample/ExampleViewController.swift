@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExampleViewController : UICollectionViewController {
+class ExampleViewController : UICollectionViewController, HFCardCollectionViewLayoutDelegate {
     
     var cardCollectionViewLayout: HFCardCollectionViewLayout?
     
@@ -69,6 +69,9 @@ class ExampleViewController : UICollectionViewController {
         let index = 0
         self.colorArray.insert(self.getRandomColor(), at: index)
         self.collectionView?.insertItems(at: [IndexPath(item: index, section: 0)])
+        if(self.colorArray.count == 1) {
+            self.cardCollectionViewLayout?.selectCardAt(index: 0)
+        }
         if(self.colorArray.count > 1) {
             self.cardCollectionViewLayout?.unselectCard()
         }
@@ -83,11 +86,22 @@ class ExampleViewController : UICollectionViewController {
             self.cardCollectionViewLayout?.unselectCard(completion: {
                 self.colorArray.remove(at: index)
                 self.collectionView?.deleteItems(at: [IndexPath(item: index, section: 0)])
+                
+                if(self.colorArray.count == 1) {
+                    self.cardCollectionViewLayout?.selectCardAt(index: 0)
+                }
             })
         }
     }
     
     // MARK: CollectionView
+    
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool {
+        if(self.colorArray.count == 1) {
+            return false
+        }
+        return true
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.colorArray.count
