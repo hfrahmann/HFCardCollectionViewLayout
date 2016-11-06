@@ -26,9 +26,9 @@ class ExampleCollectionViewCell: HFCardCollectionViewCell {
         self.tableView?.scrollsToTop = false
     }
     
-    func cardIsSelected(_ isSelected: Bool) {
-        self.buttonFlip?.isHidden = !isSelected
-        self.tableView?.scrollsToTop = isSelected
+    func cardIsRevealed(_ isRevealed: Bool) {
+        self.buttonFlip?.isHidden = !isRevealed
+        self.tableView?.scrollsToTop = isRevealed
     }
     
     @IBAction func buttonFlipAction() {
@@ -37,7 +37,7 @@ class ExampleCollectionViewCell: HFCardCollectionViewCell {
             backView.layer.cornerRadius = 10
             backView.layer.masksToBounds = true
             
-            self.cardCollectionViewLayout?.flipSelectedCard(toView: backView)
+            self.cardCollectionViewLayout?.flipRevealedCard(toView: backView)
         }
     }
     

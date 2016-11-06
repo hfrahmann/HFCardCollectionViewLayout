@@ -30,39 +30,38 @@ It's only there to have a cell that looks like a card.
 
 ## Delegate
 
-These are the delegate functions of the **HFCardCollectionViewLayoutDelegate** to control the card selection.
-*HFCardCollectionViewLayoutDelegate* inherits from *UICollectionViewDelete* so you don't need to connect a further delegate.
+These are the delegate functions of the **HFCardCollectionViewLayoutDelegate** inherits from *UICollectionViewDelete* so you don't need to connect a further delegate.
 
 ```swift
-/// Asks if the card at the specific index can be selected.
+/// Asks if the card at the specific index can be revealed.
 /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-/// - Parameter canSelectCardAtIndex: Index of the card.
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canSelectCardAtIndex index: Int) -> Bool
+/// - Parameter canRevealCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canRevealCardAtIndex index: Int) -> Bool
 
-/// Asks if the card at the specific index can be unselected.
+/// Asks if the card at the specific index can be unrevealed.
 /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-/// - Parameter canUnselectCardAtIndex: Index of the card.
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool
+/// - Parameter canUnrevealCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnrevealCardAtIndex index: Int) -> Bool
 
-/// Feedback when the card at the given index will be selected.
+/// Feedback when the card at the given index will be revealed.
 /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-/// - Parameter didSelectedCardAtIndex: Index of the card.
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int)
+/// - Parameter didRevealedCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willRevealCardAtIndex index: Int)
     
-/// Feedback when the card at the given index was selected.
+/// Feedback when the card at the given index was revealed.
 /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-/// - Parameter didSelectedCardAtIndex: Index of the card.
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int)
+/// - Parameter didRevealedCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didRevealCardAtIndex index: Int)
     
-/// Feedback when the card at the given index will be unselected.
+/// Feedback when the card at the given index will be unrevealed.
 /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-/// - Parameter didUnselectedCardAtIndex: Index of the card.
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int)
+/// - Parameter didUnrevealedCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnrevealCardAtIndex index: Int)
 
-/// Feedback when the card at the given index was unselected.
+/// Feedback when the card at the given index was unrevealed.
 /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-/// - Parameter didUnselectedCardAtIndex: Index of the card.
-func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int)
+/// - Parameter didUnrevealedCardAtIndex: Index of the card.
+func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnrevealCardAtIndex index: Int)
 ```
 
 
@@ -97,7 +96,7 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 /// But the height can be less if the frame size of collectionView is smaller.
 @IBInspectable var cardMaximumHeight: CGFloat = 0
 
-/// Count of bottom stacked cards when a card is selected.
+/// Count of bottom stacked cards when a card is revealed.
 /// Value must be between 0 and 10
 @IBInspectable var bottomNumberOfStackedCards: Int = 5
 
@@ -129,48 +128,48 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 /// Cards are stopping at top while scrolling.
 @IBInspectable var scrollStopCardsAtTop: Bool = true
 
-/// Contains the selected index.
+/// Contains the revealed index.
 /// ReadOnly.
-private(set) var selectedIndex: Int = -1
+private(set) var revealedIndex: Int = -1
 
 
 /////////////// InterfaceBuilder Actions
 
 
-/// Action for the InterfaceBuilder to flip back the selected card.
-@IBAction func flipBackSelectedCardAction()
+/// Action for the InterfaceBuilder to flip back the revealed card.
+@IBAction func flipBackRevealedCardAction()
 
-/// Action for the InterfaceBuilder to unselect the selected card.
-@IBAction func unselectSelectedCardAction()
+/// Action for the InterfaceBuilder to unreveal the revealed card.
+@IBAction func unrevealRevealedCardAction()
 
 
 /////////////// Public Functions
 
 
-/// Select a card at the given index.
+/// Reveal a card at the given index.
 ///
 /// - Parameter index: The index of the card.
 /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-public func selectCardAt(index: Int, completion: (() -> Void)? = nil)
+public func revealCardAt(index: Int, completion: (() -> Void)? = nil)
 
-/// Unselect the selected card
+/// Unreveal the revealed card
 ///
 /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-public func unselectCard(completion: (() -> Void)? = nil)
+public func unrevealCard(completion: (() -> Void)? = nil)
 
 
-/// Flips the selected card to the given view.
+/// Flips the revealed card to the given view.
 /// The frame for the view will be the same as the cell
 ///
 /// - Parameter toView: The view for the backview of te card.
 /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-public func flipSelectedCard(toView: UIView, completion: (() -> Void)? = nil)
+public func flipRevealedCard(toView: UIView, completion: (() -> Void)? = nil)
 
 
 /// Flips the flipped card back to the frontview.
 ///
 /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-public func flipSelectedCardBack(completion: (() -> Void)? = nil)
+public func flipRevealedCardBack(completion: (() -> Void)? = nil)
 ```
 
 

@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.2.2
+
+- Renamed 'selected' to 'revealed'
+
+
 ## 0.2.1
 
 - Added option 'scrollStopCardsAtTop'

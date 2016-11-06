@@ -622,7 +622,7 @@
                                         <rect key="frame" x="0.0" y="939" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V0m-21-aAV" id="Td4-fL-QBe">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V7e-cA-Rnh">
@@ -789,7 +789,6 @@
                                 <connections>
                                     <outlet property="backView" destination="0cZ-gn-BpV" id="0FD-3O-yDZ"/>
                                     <outlet property="buttonFlip" destination="DGU-ti-qek" id="eKC-6i-FDs"/>
-                                    <outlet property="buttonFlipBack" destination="ng2-gr-YQ2" id="aEa-vT-uLw"/>
                                     <outlet property="tableView" destination="Mpi-8f-pNc" id="2va-0A-kOk"/>
                                 </connections>
                             </collectionViewCell>
@@ -882,7 +881,7 @@ Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed 
                             </constraints>
                             <state key="normal" title="Flip Back"/>
                             <connections>
-                                <action selector="flipBackSelectedCardAction" destination="Fz7-Ad-gwd" eventType="touchUpInside" id="Svt-xc-3T9"/>
+                                <action selector="flipBackRevealedCardAction" destination="Fz7-Ad-gwd" eventType="touchUpInside" id="PGP-X9-0ro"/>
                             </connections>
                         </button>
                     </subviews>

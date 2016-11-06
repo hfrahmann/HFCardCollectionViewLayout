@@ -28,24 +28,24 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     
     // MARK: CollectionView
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool {
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnrevealCardAtIndex index: Int) -> Bool {
         if(self.colorArray.count == 1) {
             return false
         }
         return true
     }
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int) {
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willRevealCardAtIndex index: Int) {
         if let cell = self.collectionView?.cellForItem(at: IndexPath(item: index, section: 0)) as? ExampleCollectionViewCell {
             cell.cardCollectionViewLayout = self.cardCollectionViewLayout
-            cell.cardIsSelected(true)
+            cell.cardIsRevealed(true)
         }
     }
     
-    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int) {
+    func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnrevealCardAtIndex index: Int) {
         if let cell = self.collectionView?.cellForItem(at: IndexPath(item: index, section: 0)) as? ExampleCollectionViewCell {
             cell.cardCollectionViewLayout = self.cardCollectionViewLayout
-            cell.cardIsSelected(false)
+            cell.cardIsRevealed(false)
         }
     }
     
@@ -62,7 +62,7 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.cardCollectionViewLayout?.selectCardAt(index: indexPath.item)
+        self.cardCollectionViewLayout?.revealCardAt(index: indexPath.item)
     }
     
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -79,8 +79,8 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     
     @IBAction func addCardAction() {
         let index = 0
-        if(self.colorArray.count == 1 || self.cardCollectionViewLayout!.selectedIndex >= 0) {
-            self.cardCollectionViewLayout?.unselectCard(completion: { 
+        if(self.colorArray.count == 1 || self.cardCollectionViewLayout!.revealedIndex >= 0) {
+            self.cardCollectionViewLayout?.unrevealCard(completion: {
                 self.colorArray.insert(self.getRandomColor(), at: index)
                 self.collectionView?.insertItems(at: [IndexPath(item: index, section: 0)])
             })
@@ -90,22 +90,22 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
         }
         
         if(self.colorArray.count == 1) {
-            self.cardCollectionViewLayout?.selectCardAt(index: 0)
+            self.cardCollectionViewLayout?.revealCardAt(index: 0)
         }
     }
     
     @IBAction func deleteCardAtIndex0orSelected() {
         var index = 0
-        if(self.cardCollectionViewLayout!.selectedIndex >= 0) {
-            index = self.cardCollectionViewLayout!.selectedIndex
+        if(self.cardCollectionViewLayout!.revealedIndex >= 0) {
+            index = self.cardCollectionViewLayout!.revealedIndex
         }
         if(self.colorArray.count > index) {
-            self.cardCollectionViewLayout?.unselectCard(completion: {
+            self.cardCollectionViewLayout?.unrevealCard(completion: {
                 self.colorArray.remove(at: index)
                 self.collectionView?.deleteItems(at: [IndexPath(item: index, section: 0)])
                 
                 if(self.colorArray.count == 1) {
-                    self.cardCollectionViewLayout?.selectCardAt(index: 0)
+                    self.cardCollectionViewLayout?.revealCardAt(index: 0)
                 }
             })
         }

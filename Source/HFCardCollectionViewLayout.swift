@@ -8,38 +8,38 @@
 
 import UIKit
 
-/// Extended delegate functions to control the card selection.
+/// Extended delegate.
 @objc public protocol HFCardCollectionViewLayoutDelegate : UICollectionViewDelegate {
     
-    /// Asks if the card at the specific index can be selected.
+    /// Asks if the card at the specific index can be revealed.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter canSelectCardAtIndex: Index of the card.
-    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canSelectCardAtIndex index: Int) -> Bool
+    /// - Parameter canRevealCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canRevealCardAtIndex index: Int) -> Bool
     
-    /// Asks if the card at the specific index can be unselected.
+    /// Asks if the card at the specific index can be Unrevealed.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter canUnselectCardAtIndex: Index of the card.
-    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnselectCardAtIndex index: Int) -> Bool
+    /// - Parameter canUnrevealCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, canUnrevealCardAtIndex index: Int) -> Bool
     
-    /// Feedback when the card at the given index will be selected.
+    /// Feedback when the card at the given index will be revealed.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didSelectedCardAtIndex: Index of the card.
-    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willSelectCardAtIndex index: Int)
+    /// - Parameter didRevealedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willRevealCardAtIndex index: Int)
     
-    /// Feedback when the card at the given index was selected.
+    /// Feedback when the card at the given index was revealed.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didSelectedCardAtIndex: Index of the card.
-    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didSelectCardAtIndex index: Int)
+    /// - Parameter didRevealedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didRevealCardAtIndex index: Int)
     
-    /// Feedback when the card at the given index will be unselected.
+    /// Feedback when the card at the given index will be Unrevealed.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didUnselectedCardAtIndex: Index of the card.
-    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnselectCardAtIndex index: Int)
+    /// - Parameter didUnrevealedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, willUnrevealCardAtIndex index: Int)
     
-    /// Feedback when the card at the given index was unselected.
+    /// Feedback when the card at the given index was Unrevealed.
     /// - Parameter collectionViewLayout: The current HFCardCollectionViewLayout.
-    /// - Parameter didUnselectedCardAtIndex: Index of the card.
-    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnselectCardAtIndex index: Int)
+    /// - Parameter didUnrevealedCardAtIndex: Index of the card.
+    @objc optional func cardCollectionViewLayout(_ collectionViewLayout: HFCardCollectionViewLayout, didUnrevealCardAtIndex index: Int)
     
 }
 
@@ -102,7 +102,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         }
     }
     
-    /// Count of bottom stacked cards when a card is selected.
+    /// Count of bottom stacked cards when a card is revealed.
     ///
     /// Value must be between 0 and 10
     ///
@@ -214,127 +214,127 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         }
     }
     
-    /// Contains the selected index.
+    /// Contains the revealed index.
     /// ReadOnly.
-    private(set) open var selectedIndex: Int = -1
+    private(set) open var revealedIndex: Int = -1
     
     // MARK: Public Actions
     
-    /// Action for the InterfaceBuilder to flip back the selected card.
-    @IBAction open func flipBackSelectedCardAction() {
-        self.flipSelectedCardBack()
+    /// Action for the InterfaceBuilder to flip back the revealed card.
+    @IBAction open func flipBackRevealedCardAction() {
+        self.flipRevealedCardBack()
     }
     
-    /// Action for the InterfaceBuilder to unselect the selected card.
-    @IBAction open func unselectSelectedCardAction() {
-        self.unselectCard()
+    /// Action for the InterfaceBuilder to Unreveal the revealed card.
+    @IBAction open func UnrevealRevealedCardAction() {
+        self.unrevealCard()
     }
     
     // MARK: Public Functions
     
-    /// Select a card at the given index.
+    /// Reveal a card at the given index.
     ///
     /// - Parameter index: The index of the card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    open func selectCardAt(index: Int, completion: (() -> Void)? = nil) {
+    open func revealCardAt(index: Int, completion: (() -> Void)? = nil) {
         let collectionViewLayoutDelegate = self.collectionView?.delegate as? HFCardCollectionViewLayoutDelegate
-        let oldSelectedIndex = self.selectedIndex
+        let oldRevealedIndex = self.revealedIndex
         
-        if ((self.selectedIndex >= 0 && self.selectedIndex == index) || (self.selectedIndex >= 0 && index < 0)) && self.selectedCardIsFlipped == true {
+        if ((self.revealedIndex >= 0 && self.revealedIndex == index) || (self.revealedIndex >= 0 && index < 0)) && self.revealedCardIsFlipped == true {
             // do nothing, because the card is flipped
-        } else if self.selectedIndex >= 0 && index >= 0 {
-            if(self.collectionViewForceUnselect == false) {
-                if(collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, canUnselectCardAtIndex: self.selectedIndex) == false) {
+        } else if self.revealedIndex >= 0 && index >= 0 {
+            if(self.collectionViewForceUnreveal == false) {
+                if(collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, canUnrevealCardAtIndex: self.revealedIndex) == false) {
                     return
                 }
             }
-            self.collectionViewForceUnselect = false
-            if(self.selectedCardIsFlipped == true) {
-                self.flipSelectedCardBack(completion: {
+            self.collectionViewForceUnreveal = false
+            if(self.revealedCardIsFlipped == true) {
+                self.flipRevealedCardBack(completion: {
                     self.collectionView?.isScrollEnabled = true
-                    self.deinitializeSelectedCard()
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnselectCardAtIndex: self.selectedIndex)
-                    self.selectedIndex = -1
+                    self.deinitializeRevealedCard()
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnrevealCardAtIndex: self.revealedIndex)
+                    self.revealedIndex = -1
                     self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                        collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnselectCardAtIndex: oldSelectedIndex)
+                        collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnrevealCardAtIndex: oldRevealedIndex)
                         completion?()
                     })
                 })
             } else {
                 self.collectionView?.isScrollEnabled = true
-                self.deinitializeSelectedCard()
-                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnselectCardAtIndex: self.selectedIndex)
-                self.selectedIndex = -1
+                self.deinitializeRevealedCard()
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnrevealCardAtIndex: self.revealedIndex)
+                self.revealedIndex = -1
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnselectCardAtIndex: oldSelectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnrevealCardAtIndex: oldRevealedIndex)
                     completion?()
                 })
             }
         } else {
-            if(index < 0 && self.selectedIndex >= 0) {
-                self.deinitializeSelectedCard()
-                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnselectCardAtIndex: self.selectedIndex)
+            if(index < 0 && self.revealedIndex >= 0) {
+                self.deinitializeRevealedCard()
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnrevealCardAtIndex: self.revealedIndex)
             }
             if index >= 0 {
-                self.selectedIndex = index
-                if(collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, canSelectCardAtIndex: index) == false) {
-                    self.selectedIndex = -1
+                self.revealedIndex = index
+                if(collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, canRevealCardAtIndex: index) == false) {
+                    self.revealedIndex = -1
                     return
                 }
-                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willSelectCardAtIndex: index)
-                _ = self.initializeSelectedCard()
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willRevealCardAtIndex: index)
+                _ = self.initializeRevealedCard()
                 self.collectionView?.isScrollEnabled = false
                 
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didSelectCardAtIndex: self.selectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didRevealCardAtIndex: self.revealedIndex)
                     completion?()
                 })
-            } else if(self.selectedIndex >= 0) {
-                self.selectedIndex = index
+            } else if(self.revealedIndex >= 0) {
+                self.revealedIndex = index
                 self.collectionView?.isScrollEnabled = true
                 self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: { (finished) in
-                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnselectCardAtIndex: oldSelectedIndex)
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnrevealCardAtIndex: oldRevealedIndex)
                     completion?()
                 })
             }
-            self.selectedIndex = index
+            self.revealedIndex = index
         }
     }
     
-    /// Unselect the selected card
+    /// Unreveal the revealed card
     ///
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    open func unselectCard(completion: (() -> Void)? = nil) {
-        if(self.selectedIndex == -1) {
+    open func unrevealCard(completion: (() -> Void)? = nil) {
+        if(self.revealedIndex == -1) {
             completion?()
-        } else if(self.selectedCardIsFlipped == true) {
-            self.flipSelectedCardBack(completion: {
-                self.collectionViewForceUnselect = true
-                self.selectCardAt(index: self.selectedIndex, completion: completion)
+        } else if(self.revealedCardIsFlipped == true) {
+            self.flipRevealedCardBack(completion: {
+                self.collectionViewForceUnreveal = true
+                self.revealCardAt(index: self.revealedIndex, completion: completion)
             })
         } else {
-            self.collectionViewForceUnselect = true
-            self.selectCardAt(index: self.selectedIndex, completion: completion)
+            self.collectionViewForceUnreveal = true
+            self.revealCardAt(index: self.revealedIndex, completion: completion)
         }
     }
     
-    /// Flips the selected card to the given view.
+    /// Flips the revealed card to the given view.
     /// The frame for the view will be the same as the cell
     ///
     /// - Parameter toView: The view for the backview of te card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    open func flipSelectedCard(toView: UIView, completion: (() -> Void)? = nil) {
-        if(self.selectedCardIsFlipped == true) {
+    open func flipRevealedCard(toView: UIView, completion: (() -> Void)? = nil) {
+        if(self.revealedCardIsFlipped == true) {
             return
         }
-        if let cardCell = self.selectedCardCell, self.selectedIndex >= 0 {
+        if let cardCell = self.revealedCardCell, self.revealedIndex >= 0 {
             toView.removeFromSuperview()
-            self.selectedCardFlipView = toView
+            self.revealedCardFlipView = toView
             toView.frame = CGRect(x: 0, y: 0, width: cardCell.frame.width, height: cardCell.frame.height)
             toView.isHidden = true
             cardCell.addSubview(toView)
             
-            self.selectedCardIsFlipped = true
+            self.revealedCardIsFlipped = true
             UIApplication.shared.keyWindow?.endEditing(true)
             let originalShouldRasterize = cardCell.layer.shouldRasterize
             cardCell.layer.shouldRasterize = false
@@ -352,12 +352,12 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// Flips the flipped card back to the frontview.
     ///
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
-    open func flipSelectedCardBack(completion: (() -> Void)? = nil) {
-        if(self.selectedCardIsFlipped == false) {
+    open func flipRevealedCardBack(completion: (() -> Void)? = nil) {
+        if(self.revealedCardIsFlipped == false) {
             return
         }
-        if let cardCell = self.selectedCardCell {
-            if let flipView = self.selectedCardFlipView {
+        if let cardCell = self.revealedCardCell {
+            if let flipView = self.revealedCardFlipView {
                 let originalShouldRasterize = cardCell.layer.shouldRasterize
                 UIApplication.shared.keyWindow?.endEditing(true)
                 cardCell.layer.shouldRasterize = false
@@ -368,8 +368,8 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                 }, completion: { (Bool) -> Void in
                     flipView.removeFromSuperview()
                     cardCell.layer.shouldRasterize = originalShouldRasterize
-                    self.selectedCardFlipView = nil
-                    self.selectedCardIsFlipped = false
+                    self.revealedCardFlipView = nil
+                    self.revealedCardIsFlipped = false
                     completion?()
                 })
             }
@@ -387,19 +387,19 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     private var collectionViewTapGestureRecognizer: UITapGestureRecognizer?
     private var collectionViewIgnoreBottomContentOffsetChanges: Bool = false
     private var collectionViewLastBottomContentOffset: CGFloat = 0
-    private var collectionViewForceUnselect: Bool = false
+    private var collectionViewForceUnreveal: Bool = false
     
     private var cardCollectionBoundsSize: CGSize = .zero
     private var cardCollectionViewLayoutAttributes:[HFCardCollectionViewLayoutAttributes]!
     private var cardCollectionBottomCardsSet: [Int] = []
-    private var cardCollectionBottomCardsSelectedIndex: CGFloat = 0
+    private var cardCollectionBottomCardsRevealedIndex: CGFloat = 0
     private var cardCollectionCellSize: CGSize = .zero
     
-    private var selectedCardCell: UICollectionViewCell?
-    private var selectedCardPanGestureRecognizer: UIPanGestureRecognizer?
-    private var selectedCardPanGestureTouchLocationY: CGFloat = 0
-    private var selectedCardFlipView: UIView?
-    private var selectedCardIsFlipped: Bool = false
+    private var revealedCardCell: UICollectionViewCell?
+    private var revealedCardPanGestureRecognizer: UIPanGestureRecognizer?
+    private var revealedCardPanGestureTouchLocationY: CGFloat = 0
+    private var revealedCardFlipView: UIView?
+    private var revealedCardIsFlipped: Bool = false
     
     private var movingCardSelectedIndex: Int = -1
     private var movingCardGestureRecognizer: UILongPressGestureRecognizer?
@@ -583,10 +583,10 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             let cardLayoutAttribute = HFCardCollectionViewLayoutAttributes.init(forCellWith: indexPath)
             cardLayoutAttribute.zIndex = itemIndex
             
-            if self.selectedIndex < 0 {
-                self.generateNonSelectedCardsAttribute(cardLayoutAttribute)
-            } else if self.selectedIndex == itemIndex {
-                self.generateSelectedCardAttribute(cardLayoutAttribute)
+            if self.revealedIndex < 0 {
+                self.generateNonRevealedCardsAttribute(cardLayoutAttribute)
+            } else if self.revealedIndex == itemIndex {
+                self.generateRevealedCardAttribute(cardLayoutAttribute)
             } else {
                 self.generateBottomCardsAttribute(cardLayoutAttribute, bottomIndex: &bottomIndex)
             }
@@ -601,28 +601,28 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     }
     
     private func generateBottomIndexes() -> [Int] {
-        if self.selectedIndex < 0 {
+        if self.revealedIndex < 0 {
             return []
         }
         
         let half = Int(self.bottomNumberOfStackedCards / 2)
-        var minIndex = self.selectedIndex - half
-        var maxIndex = self.selectedIndex + half
+        var minIndex = self.revealedIndex - half
+        var maxIndex = self.revealedIndex + half
         
         if minIndex < 0 {
             minIndex = 0
-            maxIndex = self.selectedIndex + half + abs(self.selectedIndex - half)
+            maxIndex = self.revealedIndex + half + abs(self.revealedIndex - half)
         } else if maxIndex >= self.collectionViewItemCount {
             minIndex = (self.collectionViewItemCount - 2 * half) - 1
             maxIndex = self.collectionViewItemCount - 1
         }
         
-        self.cardCollectionBottomCardsSelectedIndex = 0
+        self.cardCollectionBottomCardsRevealedIndex = 0
         
         return Array(minIndex...maxIndex).filter({ (value) -> Bool in
-            if value >= 0 && value != self.selectedIndex {
-                if(value < self.selectedIndex) {
-                    self.cardCollectionBottomCardsSelectedIndex += 1
+            if value >= 0 && value != self.revealedIndex {
+                if(value < self.revealedIndex) {
+                    self.cardCollectionBottomCardsRevealedIndex += 1
                 }
                 return true
             }
@@ -630,7 +630,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         })
     }
     
-    private func generateNonSelectedCardsAttribute(_ attribute: HFCardCollectionViewLayoutAttributes) {
+    private func generateNonRevealedCardsAttribute(_ attribute: HFCardCollectionViewLayoutAttributes) {
         let cardHeadHeight = self.calculateCardHeadHeight()
         
         let startIndex = Int((self.contentOffsetTop - self.spaceAtTopForBackgroundView) / cardHeadHeight)
@@ -672,11 +672,11 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                 attribute.frame = currentFrame
             }
         }
-        attribute.isExpand = false
+        attribute.isRevealed = false
     }
     
-    private func generateSelectedCardAttribute(_ attribute: HFCardCollectionViewLayoutAttributes) {
-        attribute.isExpand = true
+    private func generateRevealedCardAttribute(_ attribute: HFCardCollectionViewLayoutAttributes) {
+        attribute.isRevealed = true
         if(self.collectionViewItemCount == 1) {
             attribute.frame = CGRect.init(x: 0, y: self.contentOffsetTop + self.spaceAtTopForBackgroundView + 0.01 , width: self.cardCollectionCellSize.width, height: self.cardCollectionCellSize.height)
         } else {
@@ -704,7 +704,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             attribute.isHidden = true
             attribute.frame = CGRect(x: 0, y: self.cardHeadHeight * CGFloat(index), width: cardCollectionCellSize.width, height: cardCollectionCellSize.height)
         }
-        attribute.isExpand = false
+        attribute.isRevealed = false
     }
     
     private func calculateCardScale(forIndex index: CGFloat, scaleBehindCard: Bool = false) -> CGFloat {
@@ -723,59 +723,59 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         return cardHeadHeight
     }
     
-    // MARK: Selected Card
+    // MARK: Revealed Card
     
-    private func initializeSelectedCard() -> Bool {
-        if let cell = self.collectionView?.cellForItem(at: IndexPath(item: self.selectedIndex, section: 0)) {
-            self.selectedCardCell = cell
-            self.selectedCardPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.selectedCardPanGestureHandler))
-            self.selectedCardPanGestureRecognizer?.delegate = self
-            self.selectedCardCell?.addGestureRecognizer(self.selectedCardPanGestureRecognizer!)
+    private func initializeRevealedCard() -> Bool {
+        if let cell = self.collectionView?.cellForItem(at: IndexPath(item: self.revealedIndex, section: 0)) {
+            self.revealedCardCell = cell
+            self.revealedCardPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.revealedCardPanGestureHandler))
+            self.revealedCardPanGestureRecognizer?.delegate = self
+            self.revealedCardCell?.addGestureRecognizer(self.revealedCardPanGestureRecognizer!)
             return true
         }
         return false
     }
     
-    private func deinitializeSelectedCard() {
-        if self.selectedCardCell != nil && self.selectedCardPanGestureRecognizer != nil {
-            self.selectedCardCell?.removeGestureRecognizer(self.selectedCardPanGestureRecognizer!)
-            self.selectedCardPanGestureRecognizer = nil
-            self.selectedCardCell = nil
+    private func deinitializeRevealedCard() {
+        if self.revealedCardCell != nil && self.revealedCardPanGestureRecognizer != nil {
+            self.revealedCardCell?.removeGestureRecognizer(self.revealedCardPanGestureRecognizer!)
+            self.revealedCardPanGestureRecognizer = nil
+            self.revealedCardCell = nil
         }
     }
     
-    internal func selectedCardPanGestureHandler() {
-        if self.collectionViewItemCount == 1 || self.selectedCardIsFlipped == true {
+    internal func revealedCardPanGestureHandler() {
+        if self.collectionViewItemCount == 1 || self.revealedCardIsFlipped == true {
             return
         }
-        if let selectedCardPanGestureRecognizer = self.selectedCardPanGestureRecognizer, self.selectedCardCell != nil {
-            let gestureTouchLocation = selectedCardPanGestureRecognizer.location(in: self.collectionView)
-            let shiftY: CGFloat = (gestureTouchLocation.y - self.selectedCardPanGestureTouchLocationY  > 0) ? gestureTouchLocation.y - self.selectedCardPanGestureTouchLocationY : 0
+        if let revealedCardPanGestureRecognizer = self.revealedCardPanGestureRecognizer, self.revealedCardCell != nil {
+            let gestureTouchLocation = revealedCardPanGestureRecognizer.location(in: self.collectionView)
+            let shiftY: CGFloat = (gestureTouchLocation.y - self.revealedCardPanGestureTouchLocationY  > 0) ? gestureTouchLocation.y - self.revealedCardPanGestureTouchLocationY : 0
             
-            switch selectedCardPanGestureRecognizer.state {
+            switch revealedCardPanGestureRecognizer.state {
             case .began:
                 UIApplication.shared.keyWindow?.endEditing(true)
-                self.selectedCardPanGestureTouchLocationY = gestureTouchLocation.y
+                self.revealedCardPanGestureTouchLocationY = gestureTouchLocation.y
             case .changed:
-                let scaleTarget = self.calculateCardScale(forIndex: self.cardCollectionBottomCardsSelectedIndex, scaleBehindCard: true)
+                let scaleTarget = self.calculateCardScale(forIndex: self.cardCollectionBottomCardsRevealedIndex, scaleBehindCard: true)
                 let scaleDiff: CGFloat = 1.0 - scaleTarget
                 let scale: CGFloat = 1.0 - min(((shiftY * scaleDiff) / 100) , scaleDiff)
                 let transformY = CGAffineTransform.init(translationX: 0, y: shiftY)
                 let transformScale = CGAffineTransform.init(scaleX: scale, y: scale)
-                self.selectedCardCell?.transform = transformY.concatenating(transformScale)
+                self.revealedCardCell?.transform = transformY.concatenating(transformScale)
             default:
-                let isNeedReload = (shiftY > self.selectedCardCell!.frame.height / 7) ? true : false
+                let isNeedReload = (shiftY > self.revealedCardCell!.frame.height / 7) ? true : false
                 let resetY = (isNeedReload) ? self.collectionView!.frame.height : 0
-                let scale: CGFloat = (isNeedReload) ? self.calculateCardScale(forIndex: self.cardCollectionBottomCardsSelectedIndex, scaleBehindCard: true) : 1.0
+                let scale: CGFloat = (isNeedReload) ? self.calculateCardScale(forIndex: self.cardCollectionBottomCardsRevealedIndex, scaleBehindCard: true) : 1.0
                 
                 let transformScale = CGAffineTransform.init(scaleX: scale, y: scale)
                 let transformY = CGAffineTransform.init(translationX: 0, y: resetY)
                 
                 UIView.animate(withDuration: 0.3, animations: {
-                    self.selectedCardCell?.transform = transformY.concatenating(transformScale)
+                    self.revealedCardCell?.transform = transformY.concatenating(transformScale)
                 }, completion: { (finished) in
                     if isNeedReload && finished {
-                        self.selectCardAt(index: self.selectedIndex)
+                        self.revealCardAt(index: self.revealedIndex)
                     }
                 })
             }
@@ -999,7 +999,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if(gestureRecognizer == self.movingCardGestureRecognizer || gestureRecognizer == self.collectionViewTapGestureRecognizer) {
-            if(self.selectedIndex >= 0) {
+            if(self.revealedIndex >= 0) {
                 return false
             }
         }
@@ -1013,11 +1013,11 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
 open class HFCardCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
     /// Specifies if the CardCell is expanded.
-    public var isExpand = false
+    public var isRevealed = false
     
     override open func copy(with zone: NSZone? = nil) -> Any {
         let attribute = super.copy(with: zone) as! HFCardCollectionViewLayoutAttributes
-        attribute.isExpand = isExpand
+        attribute.isRevealed = isRevealed
         return attribute
     }
     
@@ -1060,7 +1060,7 @@ extension UICollectionViewCell {
         super.apply(layoutAttributes)
         if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
             self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
-            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isExpand
+            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isRevealed
         } else {
             self.contentView.isUserInteractionEnabled = true
         }
