@@ -226,7 +226,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     }
     
     /// Action for the InterfaceBuilder to Unreveal the revealed card.
-    @IBAction open func UnrevealRevealedCardAction() {
+    @IBAction open func unrevealRevealedCardAction() {
         self.unrevealCard()
     }
     
