@@ -17,6 +17,8 @@ struct CardLayoutSetupOptions {
     var bottomNumberOfStackedCards: Int = 5
     var bottomStackedCardsShouldScale: Bool = true
     var bottomCardLookoutMargin: CGFloat = 10
+    var bottomStackedCardsMaximumScale: CGFloat = 1.0
+    var bottomStackedCardsMinimumScale: CGFloat = 0.94
     var spaceAtTopForBackgroundView: CGFloat = 0
     var spaceAtTopShouldSnap: Bool = true
     var spaceAtBottom: CGFloat = 0
@@ -45,6 +47,8 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var switchBottomStackedCardsShouldScale: UISwitch?
     @IBOutlet var textfieldBottomCardLookoutMargin: UITextField?
     @IBOutlet var textfieldSpaceAtTopForBackgroundView: UITextField?
+    @IBOutlet var textfieldBottomStackedCardsMinimumScale: UITextField?
+    @IBOutlet var textfieldBottomStackedCardsMaximumScale: UITextField?
     @IBOutlet var switchSpaceAtTopShouldSnap: UISwitch?
     @IBOutlet var textfieldSpaceAtBottom: UITextField?
     @IBOutlet var textfieldScrollAreaTop: UITextField?
@@ -72,22 +76,24 @@ class MenuTableViewController: UITableViewController {
     // MARK: Actions
     
     @IBAction func resetAction() {
-        self.textfieldNumberOfCards?.text               = String(self.defaults.numberOfCards)
-        self.textfieldFirstMovableIndex?.text           = String(self.defaults.firstMovableIndex)
-        self.textfieldCardHeadHeight?.text              = self.stringFromFloat(self.defaults.cardHeadHeight)
-        self.switchCardShouldExpandHeadHeight?.isOn     = self.defaults.cardShouldExpandHeadHeight
-        self.switchCardShouldStretchAtScrollTop?.isOn   = self.defaults.cardShouldStretchAtScrollTop
-        self.textfieldCardMaximumHeight?.text           = self.stringFromFloat(self.defaults.cardMaximumHeight)
-        self.textfieldBottomNumberOfStackedCards?.text  = String(self.defaults.bottomNumberOfStackedCards)
-        self.switchBottomStackedCardsShouldScale?.isOn  = self.defaults.bottomStackedCardsShouldScale
-        self.textfieldBottomCardLookoutMargin?.text     = self.stringFromFloat(self.defaults.bottomCardLookoutMargin)
-        self.textfieldSpaceAtTopForBackgroundView?.text = self.stringFromFloat(self.defaults.spaceAtTopForBackgroundView)
-        self.switchSpaceAtTopShouldSnap?.isOn           = self.defaults.spaceAtTopShouldSnap
-        self.textfieldSpaceAtBottom?.text               = self.stringFromFloat(self.defaults.spaceAtBottom)
-        self.textfieldScrollAreaTop?.text               = self.stringFromFloat(self.defaults.scrollAreaTop)
-        self.textfieldScrollAreaBottom?.text            = self.stringFromFloat(self.defaults.scrollAreaBottom)
-        self.switchScrollShouldSnapCardHead?.isOn       = self.defaults.scrollShouldSnapCardHead
-        self.switchScrollStopCardsAtTop?.isOn           = self.defaults.scrollStopCardsAtTop
+        self.textfieldNumberOfCards?.text                   = String(self.defaults.numberOfCards)
+        self.textfieldFirstMovableIndex?.text               = String(self.defaults.firstMovableIndex)
+        self.textfieldCardHeadHeight?.text                  = self.stringFromFloat(self.defaults.cardHeadHeight)
+        self.switchCardShouldExpandHeadHeight?.isOn         = self.defaults.cardShouldExpandHeadHeight
+        self.switchCardShouldStretchAtScrollTop?.isOn       = self.defaults.cardShouldStretchAtScrollTop
+        self.textfieldCardMaximumHeight?.text               = self.stringFromFloat(self.defaults.cardMaximumHeight)
+        self.textfieldBottomNumberOfStackedCards?.text      = String(self.defaults.bottomNumberOfStackedCards)
+        self.switchBottomStackedCardsShouldScale?.isOn      = self.defaults.bottomStackedCardsShouldScale
+        self.textfieldBottomCardLookoutMargin?.text         = self.stringFromFloat(self.defaults.bottomCardLookoutMargin)
+        self.textfieldSpaceAtTopForBackgroundView?.text     = self.stringFromFloat(self.defaults.spaceAtTopForBackgroundView)
+        self.switchSpaceAtTopShouldSnap?.isOn               = self.defaults.spaceAtTopShouldSnap
+        self.textfieldSpaceAtBottom?.text                   = self.stringFromFloat(self.defaults.spaceAtBottom)
+        self.textfieldScrollAreaTop?.text                   = self.stringFromFloat(self.defaults.scrollAreaTop)
+        self.textfieldScrollAreaBottom?.text                = self.stringFromFloat(self.defaults.scrollAreaBottom)
+        self.switchScrollShouldSnapCardHead?.isOn           = self.defaults.scrollShouldSnapCardHead
+        self.switchScrollStopCardsAtTop?.isOn               = self.defaults.scrollStopCardsAtTop
+        self.textfieldBottomStackedCardsMinimumScale?.text  = self.stringFromFloat(self.defaults.bottomStackedCardsMinimumScale)
+        self.textfieldBottomStackedCardsMaximumScale?.text  = self.stringFromFloat(self.defaults.bottomStackedCardsMaximumScale)
     }
     
     // MARK: Navigation
@@ -113,6 +119,9 @@ class MenuTableViewController: UITableViewController {
             layoutOptions.scrollAreaBottom              = self.getFloatFromTextfield(self.textfieldScrollAreaBottom!)
             layoutOptions.scrollShouldSnapCardHead      = self.switchScrollShouldSnapCardHead!.isOn
             layoutOptions.scrollStopCardsAtTop          = self.switchScrollStopCardsAtTop!.isOn
+            layoutOptions.bottomStackedCardsMinimumScale = self.getFloatFromTextfield(self.textfieldBottomStackedCardsMinimumScale!)
+            layoutOptions.bottomStackedCardsMaximumScale = self.getFloatFromTextfield(self.textfieldBottomStackedCardsMaximumScale!)
+            
             controller.cardLayoutOptions = layoutOptions
             
             if(segue.identifier == "AsRootController") {

@@ -19,6 +19,7 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
     
     // MARK: Overrides
     
+    /// Overwritten to setup the view
     open override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -30,7 +31,7 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
         self.contentView.backgroundColor = self.firstBackgroundColor
     }
     
-    // Pass the backgroundColor to contentView
+    /// Overwritten to pass the backgroundColor to contentView and keep the cell itself transparent.
     override open var backgroundColor: UIColor? {
         set {
             if(self.firstBackgroundColor == nil) {
@@ -44,6 +45,7 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    /// Overwritten to update the shadowPath.
     override open var bounds: CGRect {
         didSet {
             let shadowPath = UIBezierPath(rect: self.bounds).cgPath
@@ -51,8 +53,10 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // The HFCardCollectionViewLayout will create a snapshot of this cell as the moving card view.
-    // This Function will recreate the shadows to the snapshotView.
+    /// Overwritten to create a better snapshot.
+    ///
+    /// The HFCardCollectionViewLayout will create a snapshot of this cell as the moving card view.
+    /// This Function will recreate the shadows to the snapshotView.
     override open func snapshotView(afterScreenUpdates afterUpdates: Bool) -> UIView? {
         let snapshotView = UIView(frame: self.frame)
         if let snapshotOfContentView = self.contentView.snapshotView(afterScreenUpdates: afterUpdates) {

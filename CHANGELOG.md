@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 0.3
+
+- Added options 'bottomStackedCardsMinimumScale' and 'bottomStackedCardsMaximumScale'
+- Added some documentation
+
+
 ## 0.2.2
 
 - Renamed 'selected' to 'revealed'
