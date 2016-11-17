@@ -1,6 +1,13 @@
 # HFCardCollectionViewLayout
 The HFCardCollectionViewLayout provides a card stack layout not quite similar like the apps Reminder and Wallet.
 
+Features:
+
+- Many options, also within the InterfaceBuilder
+- Flip animation to have a backview
+- Move/Order the cards
+- Simple integration (only set the Layout class in the CollectionView)
+
 ![Screenshot](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/Screenshot.png)
 ![Screenplay](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/Screenplay.gif)
 
@@ -73,7 +80,7 @@ You also have access to the options and (some) actions at the *HFCardCollectionV
 ![CardLayoutOptions2](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CardLayoutOptions.png)
 ![CardLayoutActions](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/CardLayoutActions.png)
 
-These are the public variables and functions of *HFCardCollectionViewLayout*.
+These are the public variables of *HFCardCollectionViewLayout*.
 
 ```swift
 /////////////// Public Variables
@@ -131,8 +138,10 @@ These are the public variables and functions of *HFCardCollectionViewLayout*.
 /// Contains the revealed index.
 /// ReadOnly.
 private(set) var revealedIndex: Int = -1
+```
 
-
+Interface builder actions
+```swift
 /////////////// InterfaceBuilder Actions
 
 
@@ -141,8 +150,10 @@ private(set) var revealedIndex: Int = -1
 
 /// Action for the InterfaceBuilder to unreveal the revealed card.
 @IBAction func unrevealRevealedCardAction()
+```
 
-
+Public functions
+```swift
 /////////////// Public Functions
 
 
