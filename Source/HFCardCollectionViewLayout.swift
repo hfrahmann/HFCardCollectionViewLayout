@@ -433,7 +433,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         return CGFloat(min(self.collectionViewItemCount, min(self.bottomNumberOfStackedCards, self.cardCollectionBottomCardsSet.count)))
     }
     
-    private var bottomContentInset: CGFloat {
+    private var contentInsetBottom: CGFloat {
         if(self.collectionViewIgnoreBottomContentOffsetChanges == true) {
             return self.collectionViewLastBottomContentOffset
         }
@@ -546,7 +546,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     
     private func generateCellSize() -> CGSize {
         let width = self.collectionView!.frame.width - (self.contentInset.left + self.contentInset.right)
-        let maxHeight = self.collectionView!.frame.height - (self.bottomCardLookoutMargin * CGFloat(self.bottomNumberOfStackedCards)) - (self.contentInset.top + self.bottomContentInset) - 2
+        let maxHeight = self.collectionView!.frame.height - (self.bottomCardLookoutMargin * CGFloat(self.bottomNumberOfStackedCards)) - (self.contentInset.top + self.contentInsetBottom) - 2
         let height = (self.cardMaximumHeight == 0 || self.cardMaximumHeight > maxHeight) ? maxHeight : self.cardMaximumHeight
         let size = CGSize.init(width: width, height: height)
         return size
@@ -691,7 +691,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         let contentFrame = CGRect(x: 0, y: self.collectionView!.contentOffset.y, width: self.collectionView!.frame.width, height: maxY)
         if self.cardCollectionBottomCardsSet.contains(index) {
             let margin: CGFloat = self.bottomCardLookoutMargin
-            let baseHeight = (self.collectionView!.frame.height + self.collectionView!.contentOffset.y) - self.bottomContentInset - (margin * self.bottomCardCount)
+            let baseHeight = (self.collectionView!.frame.height + self.collectionView!.contentOffset.y) - self.contentInsetBottom - (margin * self.bottomCardCount)
             let scale: CGFloat = self.calculateCardScale(forIndex: bottomIndex)
             let yPos = (bottomIndex * margin) + baseHeight
             attribute.frame = CGRect.init(x: 0, y: yPos, width: self.cardCollectionCellSize.width, height: self.cardCollectionCellSize.height)
@@ -718,7 +718,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     private func calculateCardHeadHeight() -> CGFloat {
         var cardHeadHeight = self.cardHeadHeight
         if(self.cardShouldExpandHeadHeight == true) {
-            cardHeadHeight = max(self.cardHeadHeight, (self.collectionView!.frame.height - (self.contentInset.top + self.bottomContentInset + self.spaceAtTopForBackgroundView)) / CGFloat(self.collectionViewItemCount))
+            cardHeadHeight = max(self.cardHeadHeight, (self.collectionView!.frame.height - (self.contentInset.top + self.contentInsetBottom + self.spaceAtTopForBackgroundView)) / CGFloat(self.collectionViewItemCount))
         }
         return cardHeadHeight
     }
@@ -820,7 +820,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                     var currentCenter = self.movingCardCenterStart
                     currentCenter.y += (self.movingCardGestureCurrentLocation.y - self.movingCardGestureStartLocation.y - moveUpOffset)
                     self.movingCardSnapshotCell?.center = currentCenter
-                    if(self.movingCardGestureCurrentLocation.y > ((self.collectionView!.contentOffset.y + self.collectionView!.frame.height) - self.spaceAtBottom - self.bottomContentInset - self.scrollAreaBottom)) {
+                    if(self.movingCardGestureCurrentLocation.y > ((self.collectionView!.contentOffset.y + self.collectionView!.frame.height) - self.spaceAtBottom - self.contentInsetBottom - self.scrollAreaBottom)) {
                         self.setupScrollTimer(direction: .down)
                     } else if((self.movingCardGestureCurrentLocation.y - self.collectionView!.contentOffset.y) - self.contentInset.top < self.scrollAreaTop) {
                         self.setupScrollTimer(direction: .up)
@@ -961,7 +961,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             }
             translation = CGPoint(x: 0.0, y: distance)
         case .down:
-            let maxY: CGFloat = max(contentSize.height, frameSize.height) - frameSize.height + self.bottomContentInset
+            let maxY: CGFloat = max(contentSize.height, frameSize.height) - frameSize.height + self.contentInsetBottom
             if (contentOffset.y + distance) >= maxY {
                 distance = maxY - contentOffset.y
             }
@@ -983,7 +983,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                 let touchPosY = min(max(0, self.scrollAreaTop - (touchLocation.y - self.contentOffsetTop)), self.scrollAreaTop)
                 multiplier = Double(maxSpeed * (touchPosY / self.scrollAreaTop))
             } else if(self.autoscrollDirection == .down) {
-                let offsetTop = ((self.collectionView!.contentOffset.y + self.collectionView!.frame.height) - self.spaceAtBottom - self.bottomContentInset - self.scrollAreaBottom)
+                let offsetTop = ((self.collectionView!.contentOffset.y + self.collectionView!.frame.height) - self.spaceAtBottom - self.contentInsetBottom - self.scrollAreaBottom)
                 let touchPosY = min(max(0, (touchLocation.y - offsetTop)), self.scrollAreaBottom)
                 multiplier = Double(maxSpeed * (touchPosY / self.scrollAreaBottom))
             }
@@ -1012,7 +1012,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
 
 open class HFCardCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
-    /// Specifies if the CardCell is expanded.
+    /// Specifies if the CardCell is revealed.
     public var isRevealed = false
     
     override open func copy(with zone: NSZone? = nil) -> Any {
