@@ -1,6 +1,13 @@
 # HFCardCollectionViewLayout
 The HFCardCollectionViewLayout provides a card stack layout not quite similar like the apps Reminder and Wallet.
 
+Features:
+
+- Many options, also within the InterfaceBuilder
+- Flip animation to have a backview
+- Move/Order the cards
+- Simple integration (only set the Layout class in the CollectionView)
+
 ![Screenshot](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/Screenshot.png)
 ![Screenplay](https://raw.githubusercontent.com/hfrahmann/HFCardCollectionViewLayout/master/ReadmeAssets/Screenplay.gif)
 
