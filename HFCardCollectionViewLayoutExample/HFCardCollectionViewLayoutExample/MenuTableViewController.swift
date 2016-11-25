@@ -36,6 +36,7 @@ class MenuTableViewController: UITableViewController {
     var hideToolBar = false
     
     var defaults = CardLayoutSetupOptions()
+    var numberFormatter = NumberFormatter()
     
     @IBOutlet var textfieldNumberOfCards: UITextField?
     @IBOutlet var textfieldFirstMovableIndex: UITextField?
@@ -57,6 +58,7 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var switchScrollStopCardsAtTop: UISwitch?
     
     override func viewDidLoad() {
+        self.numberFormatter.locale = Locale(identifier: "en_US")
         super.viewDidLoad()
     }
     
@@ -143,14 +145,14 @@ class MenuTableViewController: UITableViewController {
     // MARK: Private functions
     
     private func getIntFromTextfield(_ textfield: UITextField) -> Int {
-        if let n = NumberFormatter().number(from: (textfield.text)!) {
+        if let n = self.numberFormatter.number(from: (textfield.text)!) {
             return n.intValue
         }
         return 0
     }
     
     private func getFloatFromTextfield(_ textfield: UITextField) -> CGFloat {
-        if let n = NumberFormatter().number(from: (textfield.text)!) {
+        if let n = self.numberFormatter.number(from: (textfield.text)!) {
             return CGFloat(n)
         }
         return 0

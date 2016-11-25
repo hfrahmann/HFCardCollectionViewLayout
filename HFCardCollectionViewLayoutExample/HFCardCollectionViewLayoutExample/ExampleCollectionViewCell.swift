@@ -34,7 +34,7 @@ class ExampleCollectionViewCell: HFCardCollectionViewCell {
     @IBAction func buttonFlipAction() {
         if let backView = self.backView {
             // Same Corner radius like the contentview of the HFCardCollectionViewCell
-            backView.layer.cornerRadius = 10
+            backView.layer.cornerRadius = self.cornerRadius
             backView.layer.masksToBounds = true
             
             self.cardCollectionViewLayout?.flipRevealedCard(toView: backView)

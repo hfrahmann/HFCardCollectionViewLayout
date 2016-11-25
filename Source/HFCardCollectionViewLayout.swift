@@ -873,6 +873,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                         if(self.self.movingCardLastTouchedIndexPath != nil && self.movingCardLastTouchedIndexPath! != currentTouchedIndexPath) {
                             let movingCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath)
                             let movingCellAttr = self.collectionView?.layoutAttributesForItem(at: currentTouchedIndexPath)
+                            
                             if(movingCell != nil) {
                                 let cardHeadHeight = self.calculateCardHeadHeight()
                                 UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
@@ -887,7 +888,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                             UIView.performWithoutAnimation {
                                 self.collectionView?.moveItem(at: currentTouchedIndexPath, to: self.movingCardLastTouchedIndexPath!)
                             }
-                            
+                             
                             self.movingCardLastTouchedIndexPath = currentTouchedIndexPath
                             if let belowCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath) {
                                 self.movingCardSnapshotCell?.removeFromSuperview()

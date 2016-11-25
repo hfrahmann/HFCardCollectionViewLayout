@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.3.1
+
+- Improved shadow of the card cell
+
+
 ## 0.3
 
 - Added options 'bottomStackedCardsMinimumScale' and 'bottomStackedCardsMaximumScale'
