@@ -873,30 +873,49 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                         if(self.self.movingCardLastTouchedIndexPath != nil && self.movingCardLastTouchedIndexPath! != currentTouchedIndexPath) {
                             let movingCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath)
                             let movingCellAttr = self.collectionView?.layoutAttributesForItem(at: currentTouchedIndexPath)
-                            
-                            if(movingCell != nil) {
-                                let cardHeadHeight = self.calculateCardHeadHeight()
-                                UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-                                    movingCell?.frame.origin.y -= cardHeadHeight
-                                }, completion: { (finished) in
-                                    movingCellAttr?.frame.origin.y -= cardHeadHeight
-                                })
-                            }
-                            
+                            let cardHeadHeight = self.calculateCardHeadHeight()
+                            let direction = currentTouchedIndexPath.item - self.movingCardSelectedIndex // -1 = up, 1 = down
                             self.movingCardSelectedIndex = currentTouchedIndexPath.item
                             self.collectionView?.dataSource?.collectionView?(self.collectionView!, moveItemAt: currentTouchedIndexPath, to: self.movingCardLastTouchedIndexPath!)
                             UIView.performWithoutAnimation {
                                 self.collectionView?.moveItem(at: currentTouchedIndexPath, to: self.movingCardLastTouchedIndexPath!)
+                                if(direction == -1) {
+                                    movingCell?.frame.origin.y -= cardHeadHeight
+                                } else {
+                                    movingCell?.frame.origin.y += cardHeadHeight
+                                }
                             }
-                             
+                            
+                            if(movingCell != nil) {
+                                UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
+                                    if(direction == -1) {
+                                        movingCell?.frame.origin.y += cardHeadHeight * 2
+                                    } else {
+                                        movingCell?.frame.origin.y += cardHeadHeight
+                                    }
+                                }, completion: { (finished) in
+                                    if(self.movingCardSnapshotCell != nil) {
+                                        if let belowCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath) {
+                                            self.movingCardSnapshotCell?.removeFromSuperview()
+                                            self.collectionView?.insertSubview(self.movingCardSnapshotCell!, belowSubview: belowCell)
+                                            self.movingCardSnapshotCell?.layer.zPosition = belowCell.layer.zPosition
+                                        } else {
+                                            self.collectionView?.sendSubview(toBack: self.movingCardSnapshotCell!)
+                                        }
+                                    }
+                                    UIView.animate(withDuration: 0.1, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
+                                        if(direction == -1) {
+                                            movingCell?.frame.origin.y -= cardHeadHeight
+                                        } else {
+                                            movingCell?.frame.origin.y -= cardHeadHeight * 2
+                                        }
+                                    }, completion: { (finished) in
+                                    })
+                                })
+                            }
+                            
                             self.movingCardLastTouchedIndexPath = currentTouchedIndexPath
-                            if let belowCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath) {
-                                self.movingCardSnapshotCell?.removeFromSuperview()
-                                self.collectionView?.insertSubview(self.movingCardSnapshotCell!, belowSubview: belowCell)
-                                self.movingCardSnapshotCell?.layer.zPosition = belowCell.layer.zPosition
-                            } else {
-                                self.collectionView?.sendSubview(toBack: self.movingCardSnapshotCell!)
-                            }
+                            
                         }
                     }
                 }
