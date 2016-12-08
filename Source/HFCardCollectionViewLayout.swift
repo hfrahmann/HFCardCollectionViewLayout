@@ -739,7 +739,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         if(self.bottomStackedCardsShouldScale == true) {
             let scalePerCard = self.scalePerCard
             let addedDownScale: CGFloat = (scaleBehindCard == true && index < self.bottomCardCount) ? scalePerCard : 0.0
-            return self.bottomStackedCardsMaximumScale - (((index + 1 - self.bottomCardCount) * -1) * scalePerCard) - addedDownScale
+            return min(1.0, self.bottomStackedCardsMaximumScale - (((index + 1 - self.bottomCardCount) * -1) * scalePerCard) - addedDownScale)
         }
         return 1.0
     }

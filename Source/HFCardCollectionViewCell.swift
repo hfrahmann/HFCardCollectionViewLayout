@@ -77,7 +77,7 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
         forView.layer.masksToBounds = false
         forView.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).cgColor
         forView.layer.shadowRadius = 2
-        forView.layer.shadowOpacity = 0.5
+        forView.layer.shadowOpacity = 0.35
         forView.layer.shadowOffset = CGSize(width: 0, height: 0)
         forView.layer.rasterizationScale = UIScreen.main.scale
         forView.layer.shouldRasterize = true
