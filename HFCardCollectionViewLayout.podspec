@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/hfrahmann/HFCardCollectionViewLayout.git',
-    :tag => '0.3.1'
+    :tag => '0.3.2'
   }
   s.source_files = 'Source/*'
 end

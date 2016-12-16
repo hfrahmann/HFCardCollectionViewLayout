@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 0.3.2
+
+- Added 'collapse all cards' option
+- Fixed a bug of a wrong scale while moving a card.
+
+
 ## 0.3.1
 
 - Improved shadow of the card cell
