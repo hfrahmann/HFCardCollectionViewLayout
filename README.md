@@ -136,7 +136,7 @@ These are the public variables of *HFCardCollectionViewLayout*.
 @IBInspectable var scrollStopCardsAtTop: Bool = true
 
 /// All cards are collapsed at bottom.
-@IBInspectable open var collapseAllCards: Bool = false
+@IBInspectable var collapseAllCards: Bool = false
     
 /// Contains the revealed index.
 /// ReadOnly.
@@ -155,7 +155,7 @@ Interface builder actions
 @IBAction func unrevealRevealedCardAction()
 
 /// Action to collapse all cards.
-@IBAction open func collapseAllCardsAction()
+@IBAction func collapseAllCardsAction()
 ```
 
 Public functions
