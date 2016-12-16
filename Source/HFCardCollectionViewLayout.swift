@@ -220,6 +220,27 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         }
     }
     
+    /// All cards are collapsed at bottom.
+    ///
+    /// Default: false
+    @IBInspectable open var collapseAllCards: Bool = false {
+        didSet {
+            self.collectionView?.isScrollEnabled = !self.collapseAllCards
+            var previousRevealedIndex = -1
+            let collectionViewLayoutDelegate = self.collectionView?.delegate as? HFCardCollectionViewLayoutDelegate
+            if(self.revealedIndex >= 0) {
+                previousRevealedIndex = self.revealedIndex
+                collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, willUnrevealCardAtIndex: self.revealedIndex)
+                self.revealedIndex = -1
+            }
+            self.collectionView?.performBatchUpdates({ self.collectionView?.reloadData() }, completion: {(finished) in
+                if(previousRevealedIndex >= 0) {
+                    collectionViewLayoutDelegate?.cardCollectionViewLayout?(self, didUnrevealCardAtIndex: previousRevealedIndex)
+                }
+            })
+        }
+    }
+    
     /// Contains the revealed index.
     /// ReadOnly.
     private(set) open var revealedIndex: Int = -1
@@ -236,6 +257,11 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         self.unrevealCard()
     }
     
+    /// Action to collapse all cards.
+    @IBAction open func collapseAllCardsAction() {
+        self.collapseAllCards = true
+    }
+    
     // MARK: Public Functions
     
     /// Reveal a card at the given index.
@@ -243,8 +269,15 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// - Parameter index: The index of the card.
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
     open func revealCardAt(index: Int, completion: (() -> Void)? = nil) {
+        var index = index
         let collectionViewLayoutDelegate = self.collectionView?.delegate as? HFCardCollectionViewLayoutDelegate
         let oldRevealedIndex = self.revealedIndex
+        
+        if(oldRevealedIndex < 0 && index >= 0 && self.collapseAllCards == true) {
+            index = oldRevealedIndex
+            self.collapseAllCards = false
+            return
+        }
         
         if ((self.revealedIndex >= 0 && self.revealedIndex == index) || (self.revealedIndex >= 0 && index < 0)) && self.revealedCardIsFlipped == true {
             // do nothing, because the card is flipped
@@ -608,9 +641,9 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             let cardLayoutAttribute = HFCardCollectionViewLayoutAttributes.init(forCellWith: indexPath)
             cardLayoutAttribute.zIndex = itemIndex
             
-            if self.revealedIndex < 0 {
+            if self.revealedIndex < 0 && self.collapseAllCards == false {
                 self.generateNonRevealedCardsAttribute(cardLayoutAttribute)
-            } else if self.revealedIndex == itemIndex {
+            } else if self.revealedIndex == itemIndex && self.collapseAllCards == false {
                 self.generateRevealedCardAttribute(cardLayoutAttribute)
             } else {
                 self.generateBottomCardsAttribute(cardLayoutAttribute, bottomIndex: &bottomIndex)
@@ -627,7 +660,13 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     
     private func generateBottomIndexes() -> [Int] {
         if self.revealedIndex < 0 {
-            return []
+            if self.collapseAllCards == false {
+                return []
+            } else {
+                let startIndex: Int = Int(self.contentOffsetTop / self.cardHeadHeight)
+                let endIndex = max(0, startIndex + self.bottomNumberOfStackedCards - 2)
+                return Array(startIndex...endIndex)
+            }
         }
         
         let half = Int(self.bottomNumberOfStackedCards / 2)
