@@ -909,16 +909,31 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                         if(self.movingCardLastTouchedIndexPath == nil && currentTouchedIndexPath != self.movingCardStartIndexPath!) {
                             self.movingCardLastTouchedIndexPath = self.movingCardStartIndexPath
                         }
-                        if(self.self.movingCardLastTouchedIndexPath != nil && self.movingCardLastTouchedIndexPath! != currentTouchedIndexPath) {
+                        if(self.movingCardLastTouchedIndexPath != nil && self.movingCardLastTouchedIndexPath! != currentTouchedIndexPath) {
                             let movingCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath)
                             let movingCellAttr = self.collectionView?.layoutAttributesForItem(at: currentTouchedIndexPath)
+                            let cardHeadHeight = self.calculateCardHeadHeight()
+                            let direction = currentTouchedIndexPath.item - self.movingCardLastTouchedIndexPath!.item // 1 = down
+                            
+                            //let oriZ = movingCell!.layer.zPosition
                             
                             if(movingCell != nil) {
-                                let cardHeadHeight = self.calculateCardHeadHeight()
-                                UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-                                    movingCell?.frame.origin.y -= cardHeadHeight
+                                var posY1 = movingCell!.frame.origin.y + cardHeadHeight
+                                var posY2 = movingCell!.frame.origin.y - cardHeadHeight
+                                
+                                if(direction == -1) {
+                                    posY1 = movingCell!.frame.origin.y + (cardHeadHeight * 2)
+                                    posY2 = movingCell!.frame.origin.y + cardHeadHeight
+                                }
+                                
+                                UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
+                                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+                                        movingCell?.frame.origin.y = posY1
+                                    })
+                                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: {
+                                        movingCell?.frame.origin.y = posY2
+                                    })
                                 }, completion: { (finished) in
-                                    movingCellAttr?.frame.origin.y -= cardHeadHeight
                                 })
                             }
                             
@@ -926,9 +941,19 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                             self.collectionView?.dataSource?.collectionView?(self.collectionView!, moveItemAt: currentTouchedIndexPath, to: self.movingCardLastTouchedIndexPath!)
                             UIView.performWithoutAnimation {
                                 self.collectionView?.moveItem(at: currentTouchedIndexPath, to: self.movingCardLastTouchedIndexPath!)
+                                //movingCell?.layer.zPosition = oriZ
                             }
-                             
+                            let animationZPosition = CABasicAnimation(keyPath: "zPosition")
+                            //animationZPosition.beginTime = CACurrentMediaTime() + 1 // 0.25
+                            animationZPosition.fromValue = movingCell!.layer.zPosition
+                            animationZPosition.toValue = movingCell!.layer.zPosition + CGFloat(direction * -1)
+                            animationZPosition.isAdditive = true
+                            animationZPosition.duration = 0.5
+                            //movingCell?.layer.add(animationZPosition, forKey: "movingCardZ")
+                            
+                            
                             self.movingCardLastTouchedIndexPath = currentTouchedIndexPath
+                            
                             if let belowCell = self.collectionView?.cellForItem(at: currentTouchedIndexPath) {
                                 self.movingCardSnapshotCell?.removeFromSuperview()
                                 self.collectionView?.insertSubview(self.movingCardSnapshotCell!, belowSubview: belowCell)
