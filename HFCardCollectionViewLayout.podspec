@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'HFCardCollectionViewLayout'
-  s.version      = '0.3.2'
+  s.version      = '0.3.3'
   s.summary      = 'The HFCardCollectionViewLayout provides a card stack layout not quite similar like the apps Reminder and Wallet.'
   s.license	 = 'MIT'
   s.homepage     = 'https://github.com/hfrahmann/HFCardCollectionViewLayout'
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/hfrahmann/HFCardCollectionViewLayout.git',
-    :tag => '0.3.2'
+    :tag => '0.3.3'
   }
   s.source_files = 'Source/*'
 end
