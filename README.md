@@ -14,11 +14,28 @@ Features:
 
 ## Installation
 
-Install it with cocoapods or just use the files inside the **Source** directory.
+Install it with Cocoapods, Swift Package Manager, Carthage  or just use the files inside the **Source** directory.
 
+
+**Cocoapods:**
 ```
 pod 'HFCardCollectionViewLayout'
 ```
+
+
+**Carthage:**
+```
+github "hfrahmann/HFCardCollectionViewLayout"
+```
+
+
+**Swift Package Manager:**
+```
+dependencies: [
+    .Package(url: "https://github.com/hfrahmann/HFCardCollectionViewLayout.git")
+]
+```
+
 
 
 ## Implementation

@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.3.3
+
+- Added Carthage support (from bitomule)
+
+
 ## 0.3.2
 
 - Added 'collapse all cards' option
