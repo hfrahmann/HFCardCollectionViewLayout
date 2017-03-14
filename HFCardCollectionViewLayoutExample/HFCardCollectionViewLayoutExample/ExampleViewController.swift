@@ -99,17 +99,6 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
         if(self.cardCollectionViewLayout!.revealedIndex >= 0) {
             index = self.cardCollectionViewLayout!.revealedIndex
         }
-        /*if(self.colorArray.count > index) {
-            self.cardCollectionViewLayout?.unrevealCard(completion: {
-                self.colorArray.remove(at: index)
-                self.collectionView?.deleteItems(at: [IndexPath(item: index, section: 0)])
-                
-                if(self.colorArray.count == 1) {
-                    self.cardCollectionViewLayout?.revealCardAt(index: 0)
-                }
-            })
-        }
-         */
         self.cardCollectionViewLayout?.flipRevealedCardBack(completion: {
             self.colorArray.remove(at: index)
             self.collectionView?.deleteItems(at: [IndexPath(item: index, section: 0)])
