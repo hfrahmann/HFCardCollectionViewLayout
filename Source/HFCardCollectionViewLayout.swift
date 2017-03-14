@@ -393,6 +393,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// - Parameter completion: An optional completion block. Will be executed the animation is finished.
     open func flipRevealedCardBack(completion: (() -> Void)? = nil) {
         if(self.revealedCardIsFlipped == false) {
+            completion?()
             return
         }
         if let cardCell = self.revealedCardCell {
@@ -427,6 +428,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     private var collectionViewIgnoreBottomContentOffsetChanges: Bool = false
     private var collectionViewLastBottomContentOffset: CGFloat = 0
     private var collectionViewForceUnreveal: Bool = false
+    private var collectionViewDeletedIndexPaths = [IndexPath]()
     
     private var cardCollectionBoundsSize: CGSize = .zero
     private var cardCollectionViewLayoutAttributes:[HFCardCollectionViewLayoutAttributes]!
@@ -590,6 +592,47 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             }
         }
         return proposedContentOffset
+    }
+    
+    /// This method is called when there is an update with deletes to the collection view.
+    override open func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+        super.prepare(forCollectionViewUpdates: updateItems)
+        
+        collectionViewDeletedIndexPaths.removeAll(keepingCapacity: false)
+        
+        for update in updateItems {
+            switch update.updateAction {
+            case .delete:
+                collectionViewDeletedIndexPaths.append(update.indexPathBeforeUpdate!)
+            default:
+                return
+            }
+        }
+    }
+    
+    /// Custom animation for deleting cells.
+    override open func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let attrs = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)
+        
+        if collectionViewDeletedIndexPaths.contains(itemIndexPath) {
+            if let attrs = attrs {
+                attrs.alpha = 0.0
+                attrs.center.x = self.collectionView!.frame.width / 2
+                attrs.center.y = self.collectionView!.frame.height
+                if self.collectionView!.contentOffset.x > 0.0 {
+                    attrs.center.x += self.collectionView!.contentOffset.x
+                }
+                attrs.transform3D = CATransform3DScale(attrs.transform3D, 0.001, 0.001, 1)
+            }
+        }
+        
+        return attrs
+    }
+    
+    /// Remove deleted indexPaths
+    override open func finalizeCollectionViewUpdates() {
+        super.finalizeCollectionViewUpdates()
+        collectionViewDeletedIndexPaths.removeAll(keepingCapacity: false)
     }
     
     // MARK: Private Functions for UICollectionViewLayout
