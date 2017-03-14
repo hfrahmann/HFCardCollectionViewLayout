@@ -1075,6 +1075,14 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
                 return false
             }
         }
+        
+        if(gestureRecognizer == self.revealedCardPanGestureRecognizer) {
+            let velocity =  self.revealedCardPanGestureRecognizer?.velocity(in: self.revealedCardPanGestureRecognizer?.view)
+            print(velocity)
+            let result = fabs(velocity!.y) > fabs(velocity!.x)
+            print(result)
+            return result
+        }
         return true
     }
     
