@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4
+
+- Fixed UIPanGestureRecognizer misbehaviour
+- Added another delete animation
+
 
 ## 0.3.3
 
