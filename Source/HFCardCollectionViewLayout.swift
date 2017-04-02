@@ -421,11 +421,9 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
             if(indexPath.section == 0) {
                 if(indexPath.item <= self.revealedIndex) {
                     self.revealedIndex += 1
-                    print("new RevIdx: \(self.revealedIndex)")
                 }
             }
         }
-        print("---")
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////
