@@ -15,6 +15,7 @@
 		7F63908EBEA5EE8B1B984B1B5CEB46E1 /* Pods-HFCardCollectionViewLayoutExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 046CED6827F8F476ACC86DD5468CF257 /* Pods-HFCardCollectionViewLayoutExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8EFA7FE72F4E97A43C553E2BC4C123B4 /* HFCardCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E00731B0E31D62A8489277EFEEB67 /* HFCardCollectionViewLayout.swift */; };
 		A5E3B8108717879F1E175A7882970651 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		B1BF26FC1E90FD810077D75E /* HFCardCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BF26FB1E90FD810077D75E /* HFCardCollectionView.swift */; };
 		CAB4E8075BB566BEB9DEFC2BB0AE1A44 /* HFCardCollectionViewLayout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B42049707F2D0F6158127900CD948320 /* HFCardCollectionViewLayout-dummy.m */; };
 		F493F895289894F832FE0C88F27A0B15 /* Pods-HFCardCollectionViewLayoutExample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF622BE70472DDFBC8E2489D38DD90 /* Pods-HFCardCollectionViewLayoutExample-dummy.m */; };
 /* End PBXBuildFile section */
@@ -35,25 +36,26 @@
 		07D657C1C371416A2A0C47DEFBCAEC04 /* Pods-HFCardCollectionViewLayoutExample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HFCardCollectionViewLayoutExample-frameworks.sh"; sourceTree = "<group>"; };
 		1C3E00731B0E31D62A8489277EFEEB67 /* HFCardCollectionViewLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HFCardCollectionViewLayout.swift; sourceTree = "<group>"; };
 		2665BF22FA509A9D04D472D47F29BBDB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2871AA1D8F3B5DB60D1FC7F51114E01C /* HFCardCollectionViewLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HFCardCollectionViewLayout.framework; path = HFCardCollectionViewLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2871AA1D8F3B5DB60D1FC7F51114E01C /* HFCardCollectionViewLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HFCardCollectionViewLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F0C5D5262152E6CAC8FBF879E31EDCE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B08DABD74D6D5378A5DDCE853030F53 /* HFCardCollectionViewLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HFCardCollectionViewLayout.xcconfig; sourceTree = "<group>"; };
 		4AAF622BE70472DDFBC8E2489D38DD90 /* Pods-HFCardCollectionViewLayoutExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HFCardCollectionViewLayoutExample-dummy.m"; sourceTree = "<group>"; };
 		54312038EC8BFFC3303E3C93C780CEFD /* HFCardCollectionViewLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HFCardCollectionViewLayout-prefix.pch"; sourceTree = "<group>"; };
 		89EB551874C33A437A4B3D8A20764101 /* Pods-HFCardCollectionViewLayoutExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HFCardCollectionViewLayoutExample.release.xcconfig"; sourceTree = "<group>"; };
-		919E129C9C6AEDB0ADC7AD498746062A /* HFCardCollectionViewLayout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = HFCardCollectionViewLayout.modulemap; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		919E129C9C6AEDB0ADC7AD498746062A /* HFCardCollectionViewLayout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HFCardCollectionViewLayout.modulemap; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A16A63496E99558B4CA6B9D180806AB9 /* HFCardCollectionViewLayoutDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HFCardCollectionViewLayoutDelegate.swift; sourceTree = "<group>"; };
 		B1258B00B7C713CD4DB0AD7B276F8F50 /* Pods-HFCardCollectionViewLayoutExample-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HFCardCollectionViewLayoutExample-resources.sh"; sourceTree = "<group>"; };
+		B1BF26FB1E90FD810077D75E /* HFCardCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HFCardCollectionView.swift; sourceTree = "<group>"; };
 		B42049707F2D0F6158127900CD948320 /* HFCardCollectionViewLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HFCardCollectionViewLayout-dummy.m"; sourceTree = "<group>"; };
 		B5F36D8799F60A8D7E92CEC996CF92EB /* Pods-HFCardCollectionViewLayoutExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HFCardCollectionViewLayoutExample.debug.xcconfig"; sourceTree = "<group>"; };
 		C67398A2C41620ED4BB8215FBA4D8EFE /* Pods-HFCardCollectionViewLayoutExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HFCardCollectionViewLayoutExample-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D41BF607B2DDA5A8DD7AE50E6E83165C /* HFCardCollectionViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HFCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		D4DDF1440510E0A645063459BBF342BC /* Pods-HFCardCollectionViewLayoutExample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HFCardCollectionViewLayoutExample-acknowledgements.plist"; sourceTree = "<group>"; };
-		F11EAAD3F1CFFDD7D706ACA402A1C371 /* Pods_HFCardCollectionViewLayoutExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_HFCardCollectionViewLayoutExample.framework; path = "Pods-HFCardCollectionViewLayoutExample.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F11EAAD3F1CFFDD7D706ACA402A1C371 /* Pods_HFCardCollectionViewLayoutExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HFCardCollectionViewLayoutExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC687B01081814BEFEA88991197B0BC /* HFCardCollectionViewLayout-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HFCardCollectionViewLayout-umbrella.h"; sourceTree = "<group>"; };
-		FFD465A5DC9B5ACE385F3591BD90A298 /* Pods-HFCardCollectionViewLayoutExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-HFCardCollectionViewLayoutExample.modulemap"; sourceTree = "<group>"; };
+		FFD465A5DC9B5ACE385F3591BD90A298 /* Pods-HFCardCollectionViewLayoutExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HFCardCollectionViewLayoutExample.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,8 +154,8 @@
 				1C3E00731B0E31D62A8489277EFEEB67 /* HFCardCollectionViewLayout.swift */,
 				A16A63496E99558B4CA6B9D180806AB9 /* HFCardCollectionViewLayoutDelegate.swift */,
 				061B996A1AE441C1526A79C4880C487C /* UICollectionViewExtensions.swift */,
+				B1BF26FB1E90FD810077D75E /* HFCardCollectionView.swift */,
 			);
-			name = Source;
 			path = Source;
 			sourceTree = "<group>";
 		};
@@ -283,6 +285,7 @@
 				CAB4E8075BB566BEB9DEFC2BB0AE1A44 /* HFCardCollectionViewLayout-dummy.m in Sources */,
 				8EFA7FE72F4E97A43C553E2BC4C123B4 /* HFCardCollectionViewLayout.swift in Sources */,
 				790F98919A98AB3E2AE7D5B3FD41A905 /* HFCardCollectionViewLayoutDelegate.swift in Sources */,
+				B1BF26FC1E90FD810077D75E /* HFCardCollectionView.swift in Sources */,
 				196BFFFB40D8CC832E03C3C4451B1646 /* UICollectionViewExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

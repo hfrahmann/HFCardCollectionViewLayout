@@ -416,6 +416,18 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         }
     }
     
+    open func willInsert(indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if(indexPath.section == 0) {
+                if(indexPath.item <= self.revealedIndex) {
+                    self.revealedIndex += 1
+                    print("new RevIdx: \(self.revealedIndex)")
+                }
+            }
+        }
+        print("---")
+    }
+    
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////                                  Private                                       //////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -617,11 +629,6 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         if collectionViewDeletedIndexPaths.contains(itemIndexPath) {
             if let attrs = attrs {
                 attrs.alpha = 0.0
-                attrs.center.x = self.collectionView!.frame.width / 2
-                attrs.center.y = self.collectionView!.frame.height
-                if self.collectionView!.contentOffset.x > 0.0 {
-                    attrs.center.x += self.collectionView!.contentOffset.x
-                }
                 attrs.transform3D = CATransform3DScale(attrs.transform3D, 0.001, 0.001, 1)
             }
         }

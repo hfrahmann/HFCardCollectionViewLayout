@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.4
+
+## 0.4.2
+
+- Created HFCardCollectionView class with a helper method
+
+
+## 0.4.1
 
 - Fixed UIPanGestureRecognizer misbehaviour
 - Added another delete animation

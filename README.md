@@ -52,6 +52,12 @@ It's only there to have a cell that looks like a card.
 **Important: This collectionView layout does support only one section!**
 
 
+### HFCardCollectionView
+
+Because of some problems with inserting items while a card is revealed, you have to use the **HFCardCollectionView** instead of the UICollectionView.
+Or if you use your own collectionview class, you can copy the lines from the file to your own.
+
+
 ## Delegate
 
 These are the delegate functions of the **HFCardCollectionViewLayoutDelegate** inherits from *UICollectionViewDelete* so you don't need to connect a further delegate.
