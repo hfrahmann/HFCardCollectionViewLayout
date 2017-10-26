@@ -471,7 +471,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     private var contentInset: UIEdgeInsets {
         get {
             if #available(iOS 11, *) {
-            return self.collectionView!.adjustedContentInset
+                return self.collectionView!.adjustedContentInset
             } else {
                 return self.collectionView!.contentInset
             }
