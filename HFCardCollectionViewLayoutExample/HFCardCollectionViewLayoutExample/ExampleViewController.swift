@@ -78,16 +78,16 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     }
     
     @IBAction func addCardAction() {
-        let index = 0
-        if(self.colorArray.count == 1 || self.cardCollectionViewLayout!.revealedIndex >= 0) {
+        let index = 2
+        /*if(self.colorArray.count == 1 || self.cardCollectionViewLayout!.revealedIndex >= 0) {
             self.cardCollectionViewLayout?.unrevealCard(completion: {
                 self.colorArray.insert(self.getRandomColor(), at: index)
                 self.collectionView?.insertItems(at: [IndexPath(item: index, section: 0)])
             })
-        } else {
+        } else {*/
             self.colorArray.insert(self.getRandomColor(), at: index)
             self.collectionView?.insertItems(at: [IndexPath(item: index, section: 0)])
-        }
+        //}
         
         if(self.colorArray.count == 1) {
             self.cardCollectionViewLayout?.revealCardAt(index: 0)
@@ -95,18 +95,18 @@ class ExampleViewController : UICollectionViewController, HFCardCollectionViewLa
     }
     
     @IBAction func deleteCardAtIndex0orSelected() {
-        var index = 0
+        var index = 2
         if(self.cardCollectionViewLayout!.revealedIndex >= 0) {
-            index = self.cardCollectionViewLayout!.revealedIndex
+            //index = self.cardCollectionViewLayout!.revealedIndex
         }
         self.cardCollectionViewLayout?.flipRevealedCardBack(completion: {
             self.colorArray.remove(at: index)
             self.collectionView?.deleteItems(at: [IndexPath(item: index, section: 0)])
-            self.cardCollectionViewLayout?.unrevealCard(completion: {
+            /*self.cardCollectionViewLayout?.unrevealCard(completion: {
                 if(self.colorArray.count == 1) {
                     self.cardCollectionViewLayout?.revealCardAt(index: 0)
                 }
-            })
+            })*/
         })
     }
     

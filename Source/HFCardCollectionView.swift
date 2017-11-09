@@ -17,4 +17,11 @@ class HFCardCollectionView: UICollectionView {
         super.insertItems(at: indexPaths)
     }
     
+    override func deleteItems(at indexPaths: [IndexPath]) {
+        if let collectionViewLayout = self.collectionViewLayout as? HFCardCollectionViewLayout {
+            collectionViewLayout.willDelete(indexPaths: indexPaths)
+        }
+        super.deleteItems(at: indexPaths)
+    }
+    
 }
