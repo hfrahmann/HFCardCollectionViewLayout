@@ -470,7 +470,11 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     
     private var contentInset: UIEdgeInsets {
         get {
-            return self.collectionView!.contentInset
+            if #available(iOS 11, *) {
+                return self.collectionView!.adjustedContentInset
+            } else {
+                return self.collectionView!.contentInset
+            }
         }
     }
     
@@ -578,7 +582,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
     /// - Parameter proposedContentOffset: The proposed point (in the collection view’s content view) at which to stop scrolling. This is the value at which scrolling would naturally stop if no adjustments were made. The point reflects the upper-left corner of the visible content.
     /// - Parameter velocity: The current scrolling velocity along both the horizontal and vertical axes. This value is measured in points per second.
     override open func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        let proposedContentOffsetY = proposedContentOffset.y + self.collectionView!.contentInset.top
+        let proposedContentOffsetY = proposedContentOffset.y + self.contentInset.top
         if(self.spaceAtTopShouldSnap == true && self.spaceAtTopForBackgroundView > 0) {
             if(proposedContentOffsetY > 0 && proposedContentOffsetY < self.spaceAtTopForBackgroundView) {
                 let scrollToTopY = self.spaceAtTopForBackgroundView * 0.5
@@ -1065,7 +1069,7 @@ open class HFCardCollectionViewLayout: UICollectionViewLayout, UIGestureRecogniz
         let frameSize = self.collectionView!.frame.size
         let contentSize = self.collectionView!.contentSize
         let contentOffset = self.collectionView!.contentOffset
-        let contentInset = self.collectionView!.contentInset
+        let contentInset = self.contentInset
         var distance: CGFloat = CGFloat(rint(scrollMultiplier * displayLink.duration))
         var translation = CGPoint.zero
         
