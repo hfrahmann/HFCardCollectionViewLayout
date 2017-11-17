@@ -105,22 +105,22 @@ class MenuTableViewController: UITableViewController {
         if let controller = segue.destination as? ExampleViewController {
             
             var layoutOptions = CardLayoutSetupOptions()
-            layoutOptions.numberOfCards                 = self.getIntFromTextfield(self.textfieldNumberOfCards!)
-            layoutOptions.firstMovableIndex             = self.getIntFromTextfield(self.textfieldFirstMovableIndex!)
-            layoutOptions.cardHeadHeight                = self.getFloatFromTextfield(self.textfieldCardHeadHeight!)
-            layoutOptions.cardShouldExpandHeadHeight    = self.switchCardShouldExpandHeadHeight!.isOn
-            layoutOptions.cardShouldStretchAtScrollTop  = self.switchCardShouldStretchAtScrollTop!.isOn
-            layoutOptions.cardMaximumHeight             = self.getFloatFromTextfield(self.textfieldCardMaximumHeight!)
-            layoutOptions.bottomNumberOfStackedCards    = self.getIntFromTextfield(self.textfieldBottomNumberOfStackedCards!)
-            layoutOptions.bottomStackedCardsShouldScale = self.switchBottomStackedCardsShouldScale!.isOn
-            layoutOptions.bottomCardLookoutMargin       = self.getFloatFromTextfield(self.textfieldBottomCardLookoutMargin!)
-            layoutOptions.spaceAtTopForBackgroundView   = self.getFloatFromTextfield(self.textfieldSpaceAtTopForBackgroundView!)
-            layoutOptions.spaceAtTopShouldSnap          = self.switchSpaceAtTopShouldSnap!.isOn
-            layoutOptions.spaceAtBottom                 = self.getFloatFromTextfield(self.textfieldSpaceAtBottom!)
-            layoutOptions.scrollAreaTop                 = self.getFloatFromTextfield(self.textfieldScrollAreaTop!)
-            layoutOptions.scrollAreaBottom              = self.getFloatFromTextfield(self.textfieldScrollAreaBottom!)
-            layoutOptions.scrollShouldSnapCardHead      = self.switchScrollShouldSnapCardHead!.isOn
-            layoutOptions.scrollStopCardsAtTop          = self.switchScrollStopCardsAtTop!.isOn
+            layoutOptions.numberOfCards                  = self.getIntFromTextfield(self.textfieldNumberOfCards!)
+            layoutOptions.firstMovableIndex              = self.getIntFromTextfield(self.textfieldFirstMovableIndex!)
+            layoutOptions.cardHeadHeight                 = self.getFloatFromTextfield(self.textfieldCardHeadHeight!)
+            layoutOptions.cardShouldExpandHeadHeight     = self.switchCardShouldExpandHeadHeight!.isOn
+            layoutOptions.cardShouldStretchAtScrollTop   = self.switchCardShouldStretchAtScrollTop!.isOn
+            layoutOptions.cardMaximumHeight              = self.getFloatFromTextfield(self.textfieldCardMaximumHeight!)
+            layoutOptions.bottomNumberOfStackedCards     = self.getIntFromTextfield(self.textfieldBottomNumberOfStackedCards!)
+            layoutOptions.bottomStackedCardsShouldScale  = self.switchBottomStackedCardsShouldScale!.isOn
+            layoutOptions.bottomCardLookoutMargin        = self.getFloatFromTextfield(self.textfieldBottomCardLookoutMargin!)
+            layoutOptions.spaceAtTopForBackgroundView    = self.getFloatFromTextfield(self.textfieldSpaceAtTopForBackgroundView!)
+            layoutOptions.spaceAtTopShouldSnap           = self.switchSpaceAtTopShouldSnap!.isOn
+            layoutOptions.spaceAtBottom                  = self.getFloatFromTextfield(self.textfieldSpaceAtBottom!)
+            layoutOptions.scrollAreaTop                  = self.getFloatFromTextfield(self.textfieldScrollAreaTop!)
+            layoutOptions.scrollAreaBottom               = self.getFloatFromTextfield(self.textfieldScrollAreaBottom!)
+            layoutOptions.scrollShouldSnapCardHead       = self.switchScrollShouldSnapCardHead!.isOn
+            layoutOptions.scrollStopCardsAtTop           = self.switchScrollStopCardsAtTop!.isOn
             layoutOptions.bottomStackedCardsMinimumScale = self.getFloatFromTextfield(self.textfieldBottomStackedCardsMinimumScale!)
             layoutOptions.bottomStackedCardsMaximumScale = self.getFloatFromTextfield(self.textfieldBottomStackedCardsMaximumScale!)
             
@@ -153,7 +153,7 @@ class MenuTableViewController: UITableViewController {
     
     private func getFloatFromTextfield(_ textfield: UITextField) -> CGFloat {
         if let n = self.numberFormatter.number(from: (textfield.text)!) {
-            return CGFloat(n)
+            return CGFloat(truncating: n)
         }
         return 0
     }

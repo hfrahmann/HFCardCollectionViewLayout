@@ -33,6 +33,19 @@ open class HFCardCollectionViewCell: UICollectionViewCell {
         self.contentView.backgroundColor = self.firstBackgroundColor
     }
     
+    /// Important for updating the Z index and setting the flag 'isUserInteractionEnabled'
+    ///
+    /// - Parameter layoutAttributes: The new layout attributes
+    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        if let cardLayoutAttributes = layoutAttributes as? HFCardCollectionViewLayoutAttributes {
+            self.layer.zPosition = CGFloat(cardLayoutAttributes.zIndex)
+            self.contentView.isUserInteractionEnabled = cardLayoutAttributes.isRevealed
+        } else {
+            self.contentView.isUserInteractionEnabled = true
+        }
+    }
+    
     /// Overwritten to pass the backgroundColor to contentView and keep the cell itself transparent.
     override open var backgroundColor: UIColor? {
         set {
